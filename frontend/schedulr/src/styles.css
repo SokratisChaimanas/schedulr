@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%; /* Ensure full height for both html and body */
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Set up a vertical column layout */
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top left, #181023, #0b0519);
+    color: #c3b3d8;
+}
+
+main {
+    flex: 1; /* Make the main content area flexible to push the footer down */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem;
+}
+
+

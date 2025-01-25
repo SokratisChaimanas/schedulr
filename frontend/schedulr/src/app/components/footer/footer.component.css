@@ -1,0 +1,52 @@
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #450d80, #2c0a4c);
+    color: #fff;
+    padding: 1rem;
+    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.6);
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+}
+
+/* Rest of your footer styles */
+
+footer h2 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+footer p {
+    font-size: 0.8rem;
+    margin: 0.5rem 0 0 0;
+}
+
+footer nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+}
+
+footer nav ul li a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: #c3b3d8;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+footer nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
