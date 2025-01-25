@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Console Logging -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- INFO Logs -->
+    <appender name="InfoLogs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/tmp/schedulr/infologs/info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/tmp/schedulr/infologs/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- WARN Logs -->
+    <appender name="WarnLogs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/tmp/schedulr/warnlogs/warn.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/tmp/schedulr/warnlogs/warn.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- ERROR Logs -->
+    <appender name="ErrorLogs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/tmp/schedulr/errorlogs/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/tmp/schedulr/errorlogs/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Tomcat Logs -->
+    <appender name="TomcatLogs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/tmp/schedulr/tomcatlogs/tomcat.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/tmp/schedulr/tomcatlogs/tomcat.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Catalina Logs -->
+    <appender name="CatalinaLogs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/tmp/schedulr/catalinalogs/catalina.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/tmp/schedulr/catalinalogs/catalina.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Logger for Tomcat -->
+    <logger name="org.apache.catalina" level="INFO" additivity="false">
+        <appender-ref ref="TomcatLogs" />
+    </logger>
+
+    <logger name="org.apache.coyote" level="INFO" additivity="false">
+        <appender-ref ref="TomcatLogs" />
+    </logger>
+
+    <logger name="org.apache.tomcat" level="INFO" additivity="false">
+        <appender-ref ref="TomcatLogs" />
+    </logger>
+
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="Console" />
+        <appender-ref ref="InfoLogs" />
+        <appender-ref ref="WarnLogs" />
+        <appender-ref ref="ErrorLogs" />
+    </root>
+
+</configuration>

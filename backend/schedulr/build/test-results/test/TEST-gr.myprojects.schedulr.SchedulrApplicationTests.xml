@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="gr.myprojects.schedulr.SchedulrApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-01-25T14:41:34" hostname="DESKTOP-3CLSEJS" time="1.055">
+  <properties/>
+  <testcase name="contextLoads()" classname="gr.myprojects.schedulr.SchedulrApplicationTests" time="1.055"/>
+  <system-out><![CDATA[16:41:09,526 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.12
+16:41:09,539 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - Here is a list of configurators discovered as a service, by rank: 
+16:41:09,539 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 -   org.springframework.boot.logging.logback.RootLogLevelConfigurator
+16:41:09,539 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - They will be invoked in order until ExecutionStatus.DO_NOT_INVOKE_NEXT_IF_ANY is returned.
+16:41:09,540 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - Constructed configurator of type class org.springframework.boot.logging.logback.RootLogLevelConfigurator
+16:41:09,576 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - org.springframework.boot.logging.logback.RootLogLevelConfigurator.configure() call lasted 2 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+16:41:09,577 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+16:41:09,582 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+16:41:09,592 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+16:41:09,594 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+16:41:09,594 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 12 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+16:41:09,594 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+16:41:09,597 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+16:41:09,599 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+16:41:09,607 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/C:/Users/30695/Desktop/CodingFactoryFinal/backend/schedulr/build/resources/main/logback.xml]
+16:41:10,328 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [Console]
+16:41:10,328 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+16:41:10,362 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:10,768 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [InfoLogs]
+16:41:10,769 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:10,805 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:10,835 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@815336475 - No compression will be used
+16:41:10,839 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@815336475 - Will use the pattern C:/tmp/schedulr/infologs/info.%d{yyyy-MM-dd}.log for the active file
+16:41:10,858 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/infologs/info.%d{yyyy-MM-dd}.log'.
+16:41:10,858 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:10,862 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:25:30.556Z
+16:41:10,885 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[InfoLogs] - Active log file name: C:/tmp/schedulr/infologs/info.log
+16:41:10,885 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[InfoLogs] - File property is set to [C:/tmp/schedulr/infologs/info.log]
+16:41:10,891 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [WarnLogs]
+16:41:10,891 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:10,892 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:10,896 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@609483101 - No compression will be used
+16:41:10,896 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@609483101 - Will use the pattern C:/tmp/schedulr/warnlogs/warn.%d{yyyy-MM-dd}.log for the active file
+16:41:10,897 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/warnlogs/warn.%d{yyyy-MM-dd}.log'.
+16:41:10,897 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:10,899 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:25:30.557Z
+16:41:10,900 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[WarnLogs] - Active log file name: C:/tmp/schedulr/warnlogs/warn.log
+16:41:10,900 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[WarnLogs] - File property is set to [C:/tmp/schedulr/warnlogs/warn.log]
+16:41:10,901 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [ErrorLogs]
+16:41:10,901 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:10,903 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:10,905 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1149407083 - No compression will be used
+16:41:10,906 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1149407083 - Will use the pattern C:/tmp/schedulr/errorlogs/error.%d{yyyy-MM-dd}.log for the active file
+16:41:10,907 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/errorlogs/error.%d{yyyy-MM-dd}.log'.
+16:41:10,907 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:10,927 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:25:30.536Z
+16:41:10,929 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ErrorLogs] - Active log file name: C:/tmp/schedulr/errorlogs/error.log
+16:41:10,929 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ErrorLogs] - File property is set to [C:/tmp/schedulr/errorlogs/error.log]
+16:41:10,931 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [TomcatLogs]
+16:41:10,931 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:10,932 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:10,934 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@767436045 - No compression will be used
+16:41:10,934 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@767436045 - Will use the pattern C:/tmp/schedulr/tomcatlogs/tomcat.%d{yyyy-MM-dd}.log for the active file
+16:41:10,935 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/tomcatlogs/tomcat.%d{yyyy-MM-dd}.log'.
+16:41:10,935 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:10,937 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:06:54.399Z
+16:41:10,938 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[TomcatLogs] - Active log file name: C:/tmp/schedulr/tomcatlogs/tomcat.log
+16:41:10,938 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[TomcatLogs] - File property is set to [C:/tmp/schedulr/tomcatlogs/tomcat.log]
+16:41:10,943 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [CatalinaLogs] not referenced. Skipping further processing.
+16:41:10,952 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.catalina] to INFO
+16:41:10,961 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [org.apache.catalina] to false
+16:41:10,962 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [TomcatLogs] to Logger[org.apache.catalina]
+16:41:10,964 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.coyote] to INFO
+16:41:10,964 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [org.apache.coyote] to false
+16:41:10,964 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [TomcatLogs] to Logger[org.apache.coyote]
+16:41:10,964 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.tomcat] to INFO
+16:41:10,964 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [org.apache.tomcat] to false
+16:41:10,964 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [TomcatLogs] to Logger[org.apache.tomcat]
+16:41:10,965 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+16:41:10,965 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [Console] to Logger[ROOT]
+16:41:10,965 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [InfoLogs] to Logger[ROOT]
+16:41:10,965 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [WarnLogs] to Logger[ROOT]
+16:41:10,965 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [ErrorLogs] to Logger[ROOT]
+16:41:10,966 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@553f1d75 - End of configuration.
+16:41:10,968 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@6e1d8f9e - Registering current configuration as safe fallback point
+16:41:10,968 |-INFO in ch.qos.logback.classic.util.ContextInitializer@22d6f11 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 1371 milliseconds. ExecutionStatus=DO_NOT_INVOKE_NEXT_IF_ANY
+
+2025-01-25 16:41:11 INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [gr.myprojects.schedulr.SchedulrApplicationTests]: SchedulrApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-01-25 16:41:12 INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration gr.myprojects.schedulr.SchedulrApplication for test class gr.myprojects.schedulr.SchedulrApplicationTests
+16:41:13,744 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [Console]
+16:41:13,744 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+16:41:13,745 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:13,746 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [InfoLogs]
+16:41:13,746 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:13,747 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:13,750 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@150950036 - No compression will be used
+16:41:13,750 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@150950036 - Will use the pattern C:/tmp/schedulr/infologs/info.%d{yyyy-MM-dd}.log for the active file
+16:41:13,752 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/infologs/info.%d{yyyy-MM-dd}.log'.
+16:41:13,752 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:13,754 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:41:12.244Z
+16:41:13,755 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[InfoLogs] - Active log file name: C:/tmp/schedulr/infologs/info.log
+16:41:13,755 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[InfoLogs] - File property is set to [C:/tmp/schedulr/infologs/info.log]
+16:41:13,756 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [WarnLogs]
+16:41:13,757 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:13,758 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:13,760 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@910101408 - No compression will be used
+16:41:13,760 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@910101408 - Will use the pattern C:/tmp/schedulr/warnlogs/warn.%d{yyyy-MM-dd}.log for the active file
+16:41:13,761 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/warnlogs/warn.%d{yyyy-MM-dd}.log'.
+16:41:13,761 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:13,762 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:25:30.557Z
+16:41:13,762 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[WarnLogs] - Active log file name: C:/tmp/schedulr/warnlogs/warn.log
+16:41:13,762 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[WarnLogs] - File property is set to [C:/tmp/schedulr/warnlogs/warn.log]
+16:41:13,763 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [ErrorLogs]
+16:41:13,763 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:13,764 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:13,768 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@905650857 - No compression will be used
+16:41:13,768 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@905650857 - Will use the pattern C:/tmp/schedulr/errorlogs/error.%d{yyyy-MM-dd}.log for the active file
+16:41:13,769 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/errorlogs/error.%d{yyyy-MM-dd}.log'.
+16:41:13,769 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:13,770 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:25:30.536Z
+16:41:13,771 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ErrorLogs] - Active log file name: C:/tmp/schedulr/errorlogs/error.log
+16:41:13,771 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[ErrorLogs] - File property is set to [C:/tmp/schedulr/errorlogs/error.log]
+16:41:13,772 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [TomcatLogs]
+16:41:13,772 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+16:41:13,773 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+16:41:13,776 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1820920259 - No compression will be used
+16:41:13,777 |-INFO in c.q.l.core.rolling.TimeBasedRollingPolicy@1820920259 - Will use the pattern C:/tmp/schedulr/tomcatlogs/tomcat.%d{yyyy-MM-dd}.log for the active file
+16:41:13,778 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - The date pattern is 'yyyy-MM-dd' from file name pattern 'C:/tmp/schedulr/tomcatlogs/tomcat.%d{yyyy-MM-dd}.log'.
+16:41:13,778 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Roll-over at midnight.
+16:41:13,779 |-INFO in c.q.l.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy - Setting initial period to 2025-01-25T14:06:54.399Z
+16:41:13,780 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[TomcatLogs] - Active log file name: C:/tmp/schedulr/tomcatlogs/tomcat.log
+16:41:13,780 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[TomcatLogs] - File property is set to [C:/tmp/schedulr/tomcatlogs/tomcat.log]
+16:41:13,781 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [CatalinaLogs] not referenced. Skipping further processing.
+16:41:13,781 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.catalina] to INFO
+16:41:13,781 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@1e008f36 - Propagating INFO level on Logger[org.apache.catalina] onto the JUL framework
+16:41:13,783 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [org.apache.catalina] to false
+16:41:13,783 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [TomcatLogs] to Logger[org.apache.catalina]
+16:41:13,783 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.coyote] to INFO
+16:41:13,783 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@1e008f36 - Propagating INFO level on Logger[org.apache.coyote] onto the JUL framework
+16:41:13,784 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [org.apache.coyote] to false
+16:41:13,784 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [TomcatLogs] to Logger[org.apache.coyote]
+16:41:13,784 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting level of logger [org.apache.tomcat] to INFO
+16:41:13,784 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@1e008f36 - Propagating INFO level on Logger[org.apache.tomcat] onto the JUL framework
+16:41:13,784 |-INFO in ch.qos.logback.classic.model.processor.LoggerModelHandler - Setting additivity of logger [org.apache.tomcat] to false
+16:41:13,784 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [TomcatLogs] to Logger[org.apache.tomcat]
+16:41:13,784 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+16:41:13,784 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@1e008f36 - Propagating INFO level on Logger[ROOT] onto the JUL framework
+16:41:13,784 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [Console] to Logger[ROOT]
+16:41:13,784 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [InfoLogs] to Logger[ROOT]
+16:41:13,784 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [WarnLogs] to Logger[ROOT]
+16:41:13,784 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [ErrorLogs] to Logger[ROOT]
+16:41:13,784 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@50acf55d - End of configuration.
+16:41:13,785 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@3cae7b8b - Registering current configuration as safe fallback point
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.1)
+
+2025-01-25 16:41:13 INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-01-25 16:41:14 INFO  g.m.s.SchedulrApplicationTests - Starting SchedulrApplicationTests using Java 17.0.10 with PID 12716 (started by 30695 in C:\Users\30695\Desktop\CodingFactoryFinal\backend\schedulr)
+2025-01-25 16:41:14 INFO  g.m.s.SchedulrApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-01-25 16:41:17 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-25 16:41:17 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 264 ms. Found 4 JPA repository interfaces.
+2025-01-25 16:41:22 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-25 16:41:23 INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-01-25 16:41:23 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-01-25 16:41:24 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-25 16:41:24 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-01-25 16:41:26 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@237cd264
+2025-01-25 16:41:26 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-01-25 16:41:26 INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.39
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-01-25 16:41:30 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-25 16:41:30 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-25 16:41:31 INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-01-25 16:41:32 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-25 16:41:33 DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-01-25 16:41:34 INFO  g.m.s.SchedulrApplicationTests - Started SchedulrApplicationTests in 21.014 seconds (process running for 28.928)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
