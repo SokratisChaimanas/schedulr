@@ -1,0 +1,16 @@
+<header>
+    <a routerLink="/events"><img src="logo.png" alt="Schedulr Logo" /></a>
+    <h1>SchedulR</h1>
+    <p>Plan and organize your events with ease</p>
+    @if (loggedInUser()) {
+        <!-- Navigation Bar -->
+        <nav>
+            <ul>
+                <li><a routerLink="/events/create-event">Create Event</a></li>
+                <li><a routerLink="/events/owned">My Events</a></li>
+                <li><a routerLink="/events/attenting/pending">My Attends</a></li>
+                <li><a routerLink="/login" (click)="onLogout()">Logout</a></li>
+            </ul>
+        </nav>
+    }
+</header>

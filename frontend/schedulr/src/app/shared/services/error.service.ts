@@ -10,16 +10,10 @@ export class ErrorService {
     
     handleResponseError(error: HttpErrorResponse) {
         if (error.error && error.error.code) {
-            const failureResponse = error.error; // Assuming the error body matches FailureResponseDTO
+            const failureResponse = error.error;
             switch (failureResponse.code) {
-                case 'ValidationError':
-                    this.handleValidationErrors(failureResponse.extraInformation);
-                    break;
                 case 'AppObjectNotFound':
-                    alert(`Not found: ${failureResponse.message}`);
-                    break;
-                case 'AppObjectAlreadyExists':
-                    alert(`Conflict: ${failureResponse.message}`);
+                    this.router.navigate(['/resource-not-found']);
                     break;
                 case 'AccessDenied':
                     alert('Access denied: ' + failureResponse.message);
@@ -31,11 +25,9 @@ export class ErrorService {
                     alert(`Unavailable: ${failureResponse.message}`);
                     break;
                 default:
-                    alert(`Error: ${failureResponse.message}`);
+                    this.router.navigate(['/unexpected-error']);
                     break;
             }
-        } else {
-            this.handleGenericError(error);
         }
     }
     
@@ -44,23 +36,5 @@ export class ErrorService {
             .map(([field, message]) => `${field}: ${message}`)
             .join('\n');
         alert(`Validation errors:\n${errorMessages}`);
-    }
-    
-    private handleGenericError(error: HttpErrorResponse) {
-        switch (error.status) {
-            case 401:
-                alert('Unauthorized. Please log in.');
-                this.router.navigate(['/login']);
-                break;
-            case 500:
-                alert('Internal server error. Please try again later.');
-                break;
-            case 0:
-                alert('Backend server is not reachable.');
-                break;
-            default:
-                alert('Unexpected error occurred. Please try again.');
-                break;
-        }
     }
 }

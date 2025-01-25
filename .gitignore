@@ -1,24 +1,62 @@
-# Compiled class file
-*.class
-
-# Log file
+# General
+.DS_Store
+Thumbs.db
 *.log
 
-# BlueJ files
-*.ctxt
+# Node.js (Angular)
+node_modules/
+dist/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+.pnp/
+.pnp.js
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Angular specific
+.angular/cache/
+.angular/*
+!src/          # Include source files
 
-# Package Files #
+# Gradle (Spring)
+.gradle/
+build/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+*.class
+.project
+.settings/
+*.prefs
+
+# MacOS
+*.DS_Store
+
+# Linux
+*.swp
+.swo
+.swn
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+logs/
+temp/
+
+# Java specific
 *.jar
 *.war
-*.nar
 *.ear
-*.zip
-*.tar.gz
-*.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# Lombok generated files
+*.lombok.config

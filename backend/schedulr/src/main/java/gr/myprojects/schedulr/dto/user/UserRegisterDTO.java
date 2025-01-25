@@ -2,12 +2,10 @@ package gr.myprojects.schedulr.dto.user;
 
 import gr.myprojects.schedulr.core.enums.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
+@PasswordMatches
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -41,4 +39,8 @@ public class UserRegisterDTO {
     @NotNull(message = "Role must not be empty")
     @Schema(description = "Role of the user", example = "USER")
     private String role;
+
+    @NotBlank(message = "Confirm Password should not be empty")
+    @Schema(description = "The confirmation password field, must be the same as password")
+    private String confirmPassword;
 }

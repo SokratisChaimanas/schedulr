@@ -1,0 +1,32 @@
+<div class="login-card">
+    @if (wasRegistered()) {
+        <app-success message="User was registered successfully"/>
+    }
+
+
+    <h2>Login to Your Account</h2>
+
+    @if (areCredentialsInvalid()) {
+        <app-error errorMessage="Invalid password or username"/>
+    }
+
+
+    <form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <label for="username">Username</label>
+        <input type="text"
+               id="username"
+               placeholder="Enter your username"
+               formControlName="username"
+        />
+
+        <label for="password">Password</label>
+        <input type="password"
+               id="password"
+               placeholder="Enter your password"
+               formControlName="password"
+        />
+
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a routerLink="/register">Register Here!</a></p>
+    </form>
+</div>
