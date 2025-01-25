@@ -1,0 +1,53 @@
+.event-card {
+    min-width: 400px;
+    background-color: #3d2057;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #fff;
+}
+
+.event-card h2 {
+    margin-bottom: 1.5rem;
+    color: #c3b3d8;
+}
+
+.event-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #c3b3d8;
+    text-align: left;
+}
+
+.event-form input,
+.event-form textarea,
+.event-form select {
+    width: 95%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #2b193d;
+    color: #c3b3d8;
+}
+
+.event-form button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #6c3ab7;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.event-form button:hover {
+    background-color: #7d4cd4;
+}
+
+.error {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+}

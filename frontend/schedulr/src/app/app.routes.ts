@@ -7,12 +7,13 @@ import {RegisterComponent} from "./components/auth/register/register.component";
 import {
     UnexpectedErrorComponent
 } from "./components/error-pages/unexpected-error/unexpected-error.component";
+import {CreateEventComponent} from "./components/events/create-event/create-event.component";
 
 
 export const routes: Routes = [
     {path: '', redirectTo: '/events', pathMatch: 'full'},
     { path: 'events', component: EventsComponent, canActivate: [authGuard] },
-    // { path: 'events/create', component: EventCreateComponent },
+    { path: 'events/create', component: CreateEventComponent, canActivate: [authGuard] },
     { path: 'login', component: LoginComponent, canActivate: [loggedInGuard] },
     { path: 'register', component: RegisterComponent },
     { path: 'resource-not-found', component: ResourceNotFoundComponent, canActivate: [authGuard]},

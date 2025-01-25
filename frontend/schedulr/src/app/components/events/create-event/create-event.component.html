@@ -1,0 +1,88 @@
+<div class="event-card">
+    <h2>Create Event</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="event-form">
+
+        <div>
+            <label for="title">Event Title</label>
+            @if (form.get('title')?.touched) {
+                @if (form.get('title')?.hasError('required')) {
+                    <p class="error">Event title is required and must be less than 100 characters.</p>
+                } @else if (form.get('title')?.hasError('maxlength')) {
+                    <p class="error">Event title must be less than 100 characters.</p>
+                }
+            }
+            <input type="text" id="title" placeholder="Enter event title" formControlName="title" />
+        </div>
+
+        <div>
+            <label for="description">Description</label>
+            @if (form.get('description')?.touched) {
+                @if (form.get('description')?.hasError('required')) {
+                    <p class="error">Description is required and must be less than 500 characters.</p>
+                } @else if (form.get('description')?.hasError('maxlength')) {
+                    <p class="error">Description must be less than 500 characters.</p>
+                }
+            }
+            <textarea id="description" placeholder="Enter description" formControlName="description"></textarea>
+        </div>
+
+        <div>
+            <label for="date">Date</label>
+            @if (form.get('date')?.touched && form.get('date')?.invalid) {
+                <p class="error">Date is required.</p>
+            }
+            <input type="date" id="date" formControlName="date" />
+        </div>
+
+        <div>
+            <label for="location">Location</label>
+            @if (form.get('location')?.touched) {
+                @if (form.get('location')?.hasError('required')) {
+                    <p class="error">Location is required.</p>
+                }
+            }
+            <input type="text" id="location" placeholder="Enter event location" formControlName="location" />
+        </div>
+
+        <div>
+            <label for="price">Price</label>
+            @if (form.get('price')?.touched) {
+                @if (form.get('price')?.hasError('required')) {
+                    <p class="error">Price is required and must be a positive number.</p>
+                }
+            }
+            <input type="number" id="price" placeholder="Enter price" formControlName="price" />
+        </div>
+
+        <div>
+            <label for="maxSeats">Max Seats</label>
+            @if (form.get('maxSeats')?.touched) {
+                @if (form.get('maxSeats')?.hasError('required')) {
+                    <p class="error">Max seats is required and must be a positive number.</p>
+                }
+            }
+            <input type="number" id="maxSeats" placeholder="Enter max seats" formControlName="maxSeats" />
+        </div>
+
+        <div>
+            <label for="category">Category</label>
+            @if (form.get('category')?.touched) {
+                @if (form.get('category')?.hasError('required')) {
+                    <p class="error">Category is required.</p>
+                }
+            }
+            <select id="category" formControlName="category">
+                @for (category of categories; track category) {
+                    <option [value]="category">{{ category }}</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label for="imageFile">Image (optional)</label>
+            <input type="file" id="imageFile" (change)="onFileChange($event)" />
+        </div>
+
+        <button type="submit">Create Event</button>
+    </form>
+</div>
