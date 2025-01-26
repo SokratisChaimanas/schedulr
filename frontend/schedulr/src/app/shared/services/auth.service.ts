@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {Injectable, Inject, signal, inject} from '@angular/core';
 import { map } from 'rxjs';
 import {LoggedInUserData, UserReadOnly, UserRegister} from "../interfaces/User";
-import {AuthenticationRequest, AuthenticationResponse} from "../interfaces/Auth";
+import {AuthenticationRequest, AuthenticationResponse, JwtPayload} from "../interfaces/Auth";
 import {jwtDecode} from "jwt-decode";
 import {SuccessResponse} from "../interfaces/Response";
 
@@ -13,18 +13,26 @@ import {SuccessResponse} from "../interfaces/Response";
 export class AuthService {
   private http = inject(HttpClient);
   private API_URL_AUTH = 'http://localhost:8080/api/auth';
-  loggedInUser = signal<LoggedInUserData | null>(null);
-  loggedInUserData = signal<AuthenticationResponse | null>(null);
-  
+  loggedInUserUsername = signal<string | null>(null);
+  loggedInUserUuid = signal<string | null>(null);
+  loggedInUserRole = signal<string | null>(null);
   constructor() {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      this.loggedInUser.set(this.decodeToken(authToken));
+      this.decodeToken(authToken);
     }
   }
   
   decodeToken(token: string) {
-    return jwtDecode(token).sub as unknown as LoggedInUserData;
+    const decodedToken = jwtDecode<JwtPayload>(token);
+   
+    if (decodedToken) {
+      this.loggedInUserUsername.set(decodedToken.sub!); // Map the subject to username
+      this.loggedInUserUuid.set(decodedToken.uuid!); // Extract UUID
+      this.loggedInUserRole.set(decodedToken.role!); // Extract Role
+    } else {
+      console.error('Failed to decode token');
+    }
   }
   
   registerUser(userdata: UserRegister) {
@@ -37,8 +45,8 @@ export class AuthService {
     return this.http.post<SuccessResponse<AuthenticationResponse>>(`${this.API_URL_AUTH}/login`, credentials).pipe(
         map(response => {
           this.storeToken(response.data.token);
-          this.loggedInUser.set(this.decodeToken(response.data.token));
-          this.loggedInUserData.set(response.data);
+          this.decodeToken(response.data.token)
+          console.log('USER UUID: ' + this.loggedInUserUuid)
           return response;
         })
     );
@@ -50,6 +58,6 @@ export class AuthService {
   
   removeToken() {
     localStorage.removeItem('authToken');
-    this.loggedInUser.set(null);
+    this.loggedInUserUsername.set(null);
   }
 }

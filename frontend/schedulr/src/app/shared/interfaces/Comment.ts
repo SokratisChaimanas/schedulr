@@ -16,4 +16,5 @@ export interface CommentReadOnly {
     eventTitle: string;
     eventUuid: string;
     isDeleted: boolean;
+    date: string;
 }

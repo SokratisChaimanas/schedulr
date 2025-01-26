@@ -78,11 +78,14 @@ public class Mapper {
                 .status(event.getStatus())
                 .ownerReadOnlyDTO(mapToUserReadOnlyDTO(event.getOwner()))
                 .imageAttachmentReadOnlyDTO(mapToImageAttachmentReadOnlyDTO(event.getImageAttachment()))
+                .category(event.getCategory())
                 .title(event.getTitle())
                 .description(event.getDescription())
                 .date(event.getDate())
                 .price(event.getPrice())
                 .uuid(event.getUuid())
+                .maxSeats(event.getMaxSeats())
+                .bookedSeats(event.getBookedSeats())
                 .commentsList(mapToCommentReadOnlyDTO(
                         Optional.ofNullable(event.getComments())
                                 .orElse(Collections.emptySet())
@@ -133,6 +136,7 @@ public class Mapper {
     public CommentReadOnlyDTO mapToCommentReadOnlyDTO(Comment comment) {
         return CommentReadOnlyDTO.builder()
                 .description(comment.getDescription())
+                .date(comment.getTimestamp())
                 .uuid(comment.getUuid())
                 .authorUsername(comment.getAuthor().getUsername())
                 .eventTitle(comment.getEvent().getTitle())

@@ -1,6 +1,7 @@
 package gr.myprojects.schedulr.dto.user;
 
 import gr.myprojects.schedulr.core.enums.Role;
+import gr.myprojects.schedulr.validation.PasswordMatches;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;

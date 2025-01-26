@@ -1,0 +1,42 @@
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #5b3e8e; /* A bit lighter purple for distinction */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0.5rem 0;
+    padding: 1rem;
+    max-width: 90%;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.author {
+    font-weight: bold;
+    color: #ffd700; /* Yellow for the author's name */
+}
+
+.date {
+    font-size: 0.8rem;
+    color: #d3bff6; /* Light purple for the date */
+}
+
+.description {
+    font-size: 1rem;
+    color: #f3e8ff; /* Light text for description */
+    margin: 0;
+}
+
+.comment-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.comment-container p {
+    margin: 0;
+}

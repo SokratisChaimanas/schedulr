@@ -15,4 +15,6 @@ export interface UserRegister {
 
 export interface LoggedInUserData {
     username: string,
+    uuid: string,
+    role: string
 }

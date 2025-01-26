@@ -26,9 +26,10 @@ public class JwtService {
 //    if use refresh expiration token
 //    private long refreshExpiration = 604800000;
 
-    public String generateToken(String username, String role) {
+    public String generateToken(String username, String role, String uuid) {
         var claims = new HashMap<String, Object>();
         claims.put("role", role);
+        claims.put("uuid", uuid); // Add the UUID here
         return Jwts
                 .builder()
                 .setIssuer("self") // todo

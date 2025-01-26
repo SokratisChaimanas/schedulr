@@ -1,5 +1,8 @@
 package gr.myprojects.schedulr.rest;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import gr.myprojects.schedulr.core.enums.Status;
 import gr.myprojects.schedulr.core.exceptions.*;
 import gr.myprojects.schedulr.core.filters.Paginated;
@@ -29,6 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventRestController {
     private final EventService eventService;
+    private final ObjectMapper objectMapper;
 
     @Operation(summary = "Create a new event", description = "Creates a new event with optional image attachment")
     @ApiResponses(value = {
@@ -37,17 +41,30 @@ public class EventRestController {
     })
     @PostMapping("/create")
     public ResponseEntity<SuccessResponseDTO<EventReadOnlyDTO>> createEvent(
-            @Valid @RequestPart("createDTO") EventCreateDTO createDTO,
+            @RequestPart("createDTO") String createDTOJson, // The DTO is passed as a JSON string
             @RequestPart("uuid") String uuid,
             @RequestPart(name = "imageFile", required = false) MultipartFile imageFile,
-            BindingResult bindingResult)
-            throws ValidationException, AppObjectInvalidArgumentException, AppObjectNotFoundException, IOException, AppServerException {
+            BindingResult bindingResult) throws ValidationException, AppObjectInvalidArgumentException, AppObjectNotFoundException, IOException, AppServerException {
 
+        System.out.println(createDTOJson + ": JSOOOON");
+
+        EventCreateDTO createDTO;
+        try {
+            createDTO = objectMapper.readValue(createDTOJson, EventCreateDTO.class);
+        } catch (IOException e) {
+            throw new ValidationException("Invalid JSON format for createDTO", bindingResult);
+        }
+        // Validate the input data
         if (bindingResult.hasErrors()) {
             throw new ValidationException("ImageAttachment", bindingResult);
         }
+        System.out.println(createDTOJson + ": JSOOOON");
+        System.out.println(createDTO);
 
+        // Call service to save the event
         EventReadOnlyDTO readOnlyDTO = eventService.saveEvent(createDTO, uuid, imageFile);
+
+        // Prepare the success response DTO
         SuccessResponseDTO<EventReadOnlyDTO> successResponseDTO = SuccessResponseDTO.<EventReadOnlyDTO>builder()
                 .status(HttpStatus.CREATED)
                 .data(readOnlyDTO)
@@ -96,17 +113,17 @@ public class EventRestController {
         return new ResponseEntity<>(successResponseDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get paginated events", description = "Retrieve a paginated list of events filtered by status")
+    @Operation(summary = "Get paginated events", description = "Retrieve a paginated list of events")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved events")
     })
     @GetMapping("")
     public ResponseEntity<SuccessResponseDTO<Page<EventReadOnlyDTO>>> getPaginatedEvents(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "PENDING") Status status
+            @RequestParam(defaultValue = "10") int size
+//            @RequestParam(defaultValue = "PENDING") Status status
     ) {
-        Page<EventReadOnlyDTO> events = eventService.getPaginatedEventsByStatus(status, page, size);
+        Page<EventReadOnlyDTO> events = eventService.getPaginatedEventsByStatus(Status.PENDING, page, size);
         SuccessResponseDTO<Page<EventReadOnlyDTO>> successResponseDTO = SuccessResponseDTO.<Page<EventReadOnlyDTO>>builder()
                 .status(HttpStatus.OK)
                 .data(events)
@@ -147,5 +164,102 @@ public class EventRestController {
                 .data(events)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get event by UUID", description = "Retrieve an event by its UUID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Event not found")
+    })
+    @GetMapping("/{eventUuid}")
+    public ResponseEntity<SuccessResponseDTO<EventReadOnlyDTO>> getEventByUuid(
+            @PathVariable String eventUuid) throws AppObjectNotFoundException, AppServerException {
+
+        // Call service to fetch the event by UUID
+        EventReadOnlyDTO eventReadOnlyDTO = eventService.getEventByUuid(eventUuid);
+
+        // Prepare the success response DTO
+        SuccessResponseDTO<EventReadOnlyDTO> successResponseDTO = SuccessResponseDTO.<EventReadOnlyDTO>builder()
+                .status(HttpStatus.OK)
+                .data(eventReadOnlyDTO)
+                .build();
+
+        return new ResponseEntity<>(successResponseDTO, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get owned events of a user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of owned events retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/user/{userUuid}/owned")
+    public ResponseEntity<SuccessResponseDTO<List<EventReadOnlyDTO>>> getOwnedEvents(
+            @PathVariable("userUuid") String userUuid) throws AppObjectNotFoundException, AppServerException, AccessDeniedException {
+        List<EventReadOnlyDTO> ownedEvents = eventService.getOwnedEventsByUserUuid(userUuid);
+
+        SuccessResponseDTO<List<EventReadOnlyDTO>> successResponseDTO = SuccessResponseDTO.<List<EventReadOnlyDTO>>builder()
+                .status(HttpStatus.OK)
+                .data(ownedEvents)
+                .build();
+
+        return new ResponseEntity<>(successResponseDTO, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get pending attended events of a user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of pending attended events retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/user/{userUuid}/attended-pending")
+    public ResponseEntity<SuccessResponseDTO<List<EventReadOnlyDTO>>> getPendingAttendedEvents(
+            @PathVariable("userUuid") String userUuid) throws AppObjectNotFoundException, AppServerException {
+        List<EventReadOnlyDTO> pendingEvents = eventService.getPendingEventsByUserUuid(userUuid);
+
+        SuccessResponseDTO<List<EventReadOnlyDTO>> successResponseDTO = SuccessResponseDTO.<List<EventReadOnlyDTO>>builder()
+                .status(HttpStatus.OK)
+                .data(pendingEvents)
+                .build();
+
+        return new ResponseEntity<>(successResponseDTO, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get completed attended events of a user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of completed attended events retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/user/{userUuid}/attended-completed")
+    public ResponseEntity<SuccessResponseDTO<List<EventReadOnlyDTO>>> getCompletedAttendedEvents(
+            @PathVariable("userUuid") String userUuid) throws AppObjectNotFoundException, AppServerException {
+        List<EventReadOnlyDTO> completedEvents = eventService.getCompletedEventsByUserUuid(userUuid);
+
+        SuccessResponseDTO<List<EventReadOnlyDTO>> successResponseDTO = SuccessResponseDTO.<List<EventReadOnlyDTO>>builder()
+                .status(HttpStatus.OK)
+                .data(completedEvents)
+                .build();
+
+        return new ResponseEntity<>(successResponseDTO, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get canceled attended events of a user")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of canceled attended events retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/user/{userUuid}/attended-canceled")
+    public ResponseEntity<SuccessResponseDTO<List<EventReadOnlyDTO>>> getCanceledAttendedEvents(
+            @PathVariable("userUuid") String userUuid) throws AppObjectNotFoundException, AppServerException {
+        List<EventReadOnlyDTO> canceledEvents = eventService.getCanceledEventsByUserUuid(userUuid);
+
+        SuccessResponseDTO<List<EventReadOnlyDTO>> successResponseDTO = SuccessResponseDTO.<List<EventReadOnlyDTO>>builder()
+                .status(HttpStatus.OK)
+                .data(canceledEvents)
+                .build();
+
+        return new ResponseEntity<>(successResponseDTO, HttpStatus.OK);
     }
 }

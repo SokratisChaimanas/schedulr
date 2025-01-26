@@ -1,0 +1,72 @@
+.event-container {
+    display: flex;
+    max-width: 90%;
+    background-color: #4c2a85; /* Darker purple for better contrast */
+    /*border-radius: px;*/
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0.5rem;
+}
+
+.event-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.event-image {
+    width: 35%;
+    height: 200px;
+    object-fit: fill;
+    border-right: 2px solid #bf9ee5;
+}
+
+.event-details {
+    padding: 1.5rem;
+    flex: 1;
+    color: #f3e8ff; /* Light text color for readability */
+}
+
+h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    color: #f5d0fe; /* Softer light purple */
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #dfc2ff; /* Light pastel purple for secondary text */
+    margin-bottom: 1rem;
+}
+
+.info p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #eaddff; /* Consistent light tone for readability */
+}
+
+time {
+    display: block;
+    font-size: 0.9rem;
+    color: #d3bff6; /* Subtle color for date text */
+}
+
+.category {
+    font-weight: bold;
+    color: #ffc107; /* Yellow for emphasis on category */
+}
+
+.seats {
+    font-size: 0.9rem;
+    color: #eaddff;
+}
+
+.seats .booked {
+    font-weight: bold;
+    color: #ffb3d9; /* Highlighted booked seats */
+}
+
+.seats .max {
+    font-weight: normal;
+    color: #d3bff6;
+}

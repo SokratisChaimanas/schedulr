@@ -30,7 +30,7 @@ public class AuthenticationService {
 
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtService.generateToken(user.getUsername(), user.getRole().name());
+        String token = jwtService.generateToken(user.getUsername(), user.getRole().name(), user.getUuid());
 
         return new AuthenticationResponseDTO(token, user.getUuid(), user.getRole());
     }

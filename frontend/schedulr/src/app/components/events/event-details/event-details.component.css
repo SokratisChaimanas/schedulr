@@ -1,0 +1,147 @@
+/* Main Event Details */
+.event-details-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #5e2a84; /* Softer purple background */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Event Container */
+.event-container {
+    display: flex;
+    background-color: #6b2f91; /* Lighter purple for better contrast */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+}
+
+.event-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-right: 2px solid #e1bee7; /* Light purple border for balance */
+}
+
+.event-details {
+    padding: 1.5rem;
+    flex: 1;
+    color: #f3e8ff;
+}
+
+.event-details h1 {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    color: #f5d0fe;
+}
+
+.description {
+    font-size: 1rem;
+    color: #e1bee7; /* Softer light purple for description */
+    margin-bottom: 1.5rem;
+}
+
+.info p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #f0e6ff; /* Light color for all info text */
+}
+
+.info time {
+    display: block;
+    font-size: 1rem;
+    color: #c5a7e3; /* Lighter shade for time */
+}
+
+.seats {
+    font-size: 1rem;
+    color: #e0d3ff;
+}
+
+.seats .booked {
+    font-weight: bold;
+    color: #ff9ee3; /* Soft pink for booked seats */
+}
+
+.seats .max {
+    font-weight: normal;
+    color: #d3bff6; /* Muted light purple */
+}
+
+/* Comments Section */
+.comments-section {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #5d208a; /* Darker purple to separate comment section */
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comments-section h2 {
+    margin-bottom: 1rem;
+    color: #e5d0ff; /* Light pastel purple for header */
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.comment {
+    background: #6a3a7a; /* Muted darker purple for the comment */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1rem;
+}
+
+.comment-author {
+    font-size: 1rem;
+    color: #ffcb00; /* Bright yellow for emphasis */
+    margin-bottom: 0.5rem;
+}
+
+.comment-date {
+    font-size: 0.9rem;
+    color: #c7b0d7; /* Light greyish purple for date */
+    margin-left: 0.5rem;
+}
+
+.comment-description {
+    font-size: 1rem;
+    color: #e3e3e3; /* Light grey for text */
+    line-height: 1.5;
+}
+
+/* Hover Effects */
+.event-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.comment:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Attend Button */
+.attend-btn {
+    display: inline-block;
+    background-color: #ff9ee3; /* Soft pink similar to booked seats */
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.attend-btn:hover {
+    background-color: #f19be8; /* Slightly lighter pink on hover */
+}
+
+.attend-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 158, 227, 0.5); /* Soft glow on focus */
+}

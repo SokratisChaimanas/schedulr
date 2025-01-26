@@ -12,10 +12,10 @@ import {AuthService} from "../../../shared/services/auth.service";
 export class HeaderComponent {
   authService = inject(AuthService);
   
-  loggedInUser = this.authService.loggedInUser;
+  loggedInUser = this.authService.loggedInUserUsername;
   
   onLogout() {
     this.authService.removeToken();
-    this.authService.loggedInUser.set(null)
+    this.authService.loggedInUserUsername.set(null)
   }
 }

@@ -8,12 +8,14 @@ import {
     UnexpectedErrorComponent
 } from "./components/error-pages/unexpected-error/unexpected-error.component";
 import {CreateEventComponent} from "./components/events/create-event/create-event.component";
+import {EventDetailsComponent} from "./components/events/event-details/event-details.component";
 
 
 export const routes: Routes = [
-    {path: '', redirectTo: '/events', pathMatch: 'full'},
+    { path: '', redirectTo: '/events', pathMatch: 'full' },
     { path: 'events', component: EventsComponent, canActivate: [authGuard] },
     { path: 'events/create', component: CreateEventComponent, canActivate: [authGuard] },
+    { path: 'event', component: EventDetailsComponent },
     { path: 'login', component: LoginComponent, canActivate: [loggedInGuard] },
     { path: 'register', component: RegisterComponent },
     { path: 'resource-not-found', component: ResourceNotFoundComponent, canActivate: [authGuard]},

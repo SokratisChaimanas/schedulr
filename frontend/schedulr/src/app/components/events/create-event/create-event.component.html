@@ -27,11 +27,11 @@
         </div>
 
         <div>
-            <label for="date">Date</label>
+            <label for="date">Date & Time</label>
             @if (form.get('date')?.touched && form.get('date')?.invalid) {
-                <p class="error">Date is required.</p>
+                <p class="error">Date and time are required.</p>
             }
-            <input type="date" id="date" formControlName="date" />
+            <input type="datetime-local" id="date" formControlName="date" />
         </div>
 
         <div>

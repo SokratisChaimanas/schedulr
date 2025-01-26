@@ -1,5 +1,6 @@
 package gr.myprojects.schedulr.dto.event;
 
+import gr.myprojects.schedulr.core.enums.Category;
 import gr.myprojects.schedulr.core.enums.Status;
 import gr.myprojects.schedulr.dto.comment.CommentReadOnlyDTO;
 import gr.myprojects.schedulr.dto.user.UserReadOnlyDTO;
@@ -28,6 +29,9 @@ public class EventReadOnlyDTO {
     @Schema(description = "Description of the event", example = "Learn Spring Boot in a day!")
     private String description;
 
+    @Schema(description = "The category of the event")
+    private Category category;
+
     @Schema(description = "Date and time of the event", example = "2025-02-01T10:00:00")
     private LocalDateTime date;
 
@@ -42,4 +46,10 @@ public class EventReadOnlyDTO {
 
     @Schema(description = "List of comments for the event", implementation = CommentReadOnlyDTO.class)
     private List<CommentReadOnlyDTO> commentsList;
+
+    @Schema(description = "Maximun capacity of the event")
+    private Integer maxSeats;
+
+    @Schema(description = "The booked seats")
+    private Integer bookedSeats;
 }

@@ -1,0 +1,7 @@
+<div class="comment-container">
+    <div class="comment-header">
+        <span class="author">{{ comment.authorUsername }}</span>
+        <time class="date">{{ comment.date | date: 'MM/dd/YYYY' }} at {{ comment.date | date: 'h:mm a' }}</time>
+    </div>
+    <p class="description">{{ comment.description }}</p>
+</div>

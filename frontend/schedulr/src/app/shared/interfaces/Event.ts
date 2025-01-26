@@ -10,6 +10,9 @@ export interface EventReadOnly {
     imageAttachmentReadOnlyDTO: ImageAttachmentReadOnly;
     ownerReadOnlyDTO: UserReadOnly;
     price: number;
+    maxSeats: number;
+    bookedSeats: number;
+    category: string;
     commentsList: CommentReadOnly[];
 }
 

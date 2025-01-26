@@ -10,13 +10,13 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown
     
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
-            if (error.status === 409 || error.status === 400) {
+            // if (error.status === 409 || error.status === 400) {
                 return throwError(() => error.error);
-            }
+            // }
             
             // Handle other errors globally
-            errorService.handleResponseError(error);
-            return throwError(() => error.error); // Re-throw the error for logging or further handling if necessary
+            // errorService.handleResponseError(error);
+            // return throwError(() => error.error); // Re-throw the error for logging or further handling if necessary
         })
     );
 };

@@ -4,6 +4,8 @@ import gr.myprojects.schedulr.dto.user.UserReadOnlyDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,4 +30,7 @@ public class CommentReadOnlyDTO {
 
     @Schema(description = "Indicates whether the comment is deleted", example = "false")
     private Boolean isDeleted;
+
+    @Schema(description = "The date of the comment")
+    private LocalDateTime date;
 }

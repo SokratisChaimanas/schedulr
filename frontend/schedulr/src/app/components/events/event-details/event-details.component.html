@@ -1,0 +1,47 @@
+@if (event) {
+    <div class="event-details-container">
+        <div class="event-container">
+            <img
+                class="event-image"
+                src="logo.png"
+                [alt]="event.title + ' LOGO'"
+            />
+            <div class="event-details">
+                <h1>{{ event.title }}</h1>
+                <p class="description">{{ event.description }}</p>
+                <div class="info">
+                    <p class="category">Category: {{ event.category }}</p>
+                    <time>
+                        Date: {{ event.date | date: 'MMMM d, yyyy' }} at {{ event.date | date: 'h:mm a' }}
+                    </time>
+                    <p>Price: {{ event.price | currency }}</p>
+                    <p class="seats">
+                        Seats: <span class="booked">{{ event.bookedSeats }}</span>/<span class="max">{{ event.maxSeats }}</span>
+                    </p>
+                    @if (!isAttending) {
+                        <button class="attend-btn" (click)="attendEvent()">Attend</button>
+                    } @else {
+                        <button class="attend-btn" disabled>You are attending</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (event.commentsList && event.commentsList.length > 0) {
+            <div class="comments-section">
+                <h2>Comments</h2>
+                <ul>
+                    @for (comment of event.commentsList; track comment.uuid) {
+                        <li>
+                            <app-comment [comment]="comment"></app-comment>
+                        </li>
+                    }
+                </ul>
+            </div>
+        } @else {
+            <div class="no-comments">
+                <p>No comments available for this event.</p>
+            </div>
+        }
+    </div>
+}

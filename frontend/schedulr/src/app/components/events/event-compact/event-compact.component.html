@@ -1,0 +1,20 @@
+<!-- event-compact.component.html -->
+<div class="event-container" (click)="onClick()">
+    <img
+        class="event-image"
+        src="logo.png"
+        [alt]="event.title + ' LOGO'"
+    />
+    <div class="event-details">
+        <h2>Tittle: {{ event.title }}</h2>
+        <p class="description">Description: {{ event.description }}</p>
+        <div class="info">
+            <p class="category">Category: {{ event.category }}</p>
+            <time>Date: {{ event.date | date: 'MM/dd/YYYY' }} at {{ event.date | date: 'h:mm a' }} </time>
+            <p>Price: {{ event.price | currency }}</p>
+            <p class="seats">
+                Seats: <span class="booked">{{ event.bookedSeats }}</span>/<span class="max">{{ event.maxSeats }}</span>
+            </p>
+        </div>
+    </div>
+</div>

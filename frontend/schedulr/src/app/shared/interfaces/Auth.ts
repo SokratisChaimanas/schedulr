@@ -8,3 +8,10 @@ export interface AuthenticationResponse {
     uuid: string;
     role: string;
 }
+
+export interface JwtPayload {
+    sub?: string; // Username
+    uuid?: string; // UUID
+    role?: string; // Role
+    // [key: string]: any; // Other optional fields
+}

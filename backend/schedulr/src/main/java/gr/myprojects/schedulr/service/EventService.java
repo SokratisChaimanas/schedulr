@@ -2,6 +2,7 @@ package gr.myprojects.schedulr.service;
 
 import gr.myprojects.schedulr.core.exceptions.*;
 import gr.myprojects.schedulr.core.util.ServiceUtil;
+import gr.myprojects.schedulr.dto.user.UserReadOnlyDTO;
 import gr.myprojects.schedulr.service.UserService;
 import gr.myprojects.schedulr.core.enums.Role;
 import gr.myprojects.schedulr.core.enums.Status;
@@ -112,7 +113,7 @@ public class EventService {
             LOGGER.error("Failed to cancel Event. {}", e.getMessage());
             throw e;
         } catch (Exception e) {
-            LOGGER.error("Unexpected error while trying to cancel event with UUID: {}. ERROR: {}",eventUuid, e.getMessage());
+            LOGGER.error("Unexpected error while trying to cancel event with UUID: {}. ERROR: {}", eventUuid, e.getMessage());
             throw new AppServerException("An unexpected error occurred. ERROR: " + e.getMessage());
         }
     }
@@ -205,6 +206,125 @@ public class EventService {
                 .build();
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public EventReadOnlyDTO getEventByUuid(String eventUuid) throws AppObjectNotFoundException, AppServerException {
+        try {
+            Event event = eventRepository.findByUuid(eventUuid)
+                    .orElseThrow(() -> new AppObjectNotFoundException("Event", "Event with UUID: " + eventUuid + " was not found"));
+
+            // Map the event entity to the EventReadOnlyDTO and return
+            return mapper.mapToEventReadOnlyDTO(event);
+        } catch (AppObjectNotFoundException e) {
+            LOGGER.error("Event with UUID: {} not found. ERROR: {}", eventUuid, e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error occurred while fetching event with UUID: {}. ERROR: {}", eventUuid, e.getMessage());
+            throw new AppServerException("An unexpected error occurred. ERROR: " + e.getMessage());
+        }
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<EventReadOnlyDTO> getOwnedEventsByUserUuid(String userUuid) throws AppObjectNotFoundException, AccessDeniedException, AppServerException {
+        try {
+            // Check the authentication and get the principal user
+            User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(userUuid);
+
+            // Validate if the user exists
+            if (userRepository.findByUuid(userUuid).isEmpty()) {
+                throw new AppObjectNotFoundException("User", "User with UUID: " + userUuid + " does not exist");
+            }
+
+            // Fetch events owned by the logged-in user
+            List<Event> ownedEventsList = eventRepository.findByOwnerUuid(principalUser.getUuid());
+            LOGGER.info("Events owned by user with UUID: {}, were fetched. Number of events: {}",
+                    principalUser.getUuid(), ownedEventsList.size());
+
+            return mapper.mapToEventReadOnlyDTO(ownedEventsList);
+        } catch (AppObjectNotFoundException e) {
+            LOGGER.warn("User with UUID: {} does not exist.", userUuid);
+            throw e;
+        } catch (AccessDeniedException e) {
+            LOGGER.warn("Access denied for user with UUID: {} while fetching events. {}", userUuid, e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while fetching events for user with UUID: {}. {}", userUuid, e.getMessage());
+            throw new AppServerException("An unexpected error occurred. ERROR: " + e.getMessage());
+        }
+
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<EventReadOnlyDTO> getPendingEventsByUserUuid(String userUuid) throws AppObjectNotFoundException, AppServerException {
+        return getAttendedEventsByUserUuidByStatus(userUuid, Status.PENDING);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<EventReadOnlyDTO> getCompletedEventsByUserUuid(String userUuid) throws AppObjectNotFoundException, AppServerException {
+        return getAttendedEventsByUserUuidByStatus(userUuid, Status.COMPLETED);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<EventReadOnlyDTO> getCanceledEventsByUserUuid(String userUuid) throws AppObjectNotFoundException, AppServerException {
+        return getAttendedEventsByUserUuidByStatus(userUuid, Status.CANCELED);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public UserReadOnlyDTO deleteUser(String adminUserUuid, String userToDeleteUuid) throws AccessDeniedException, AppObjectNotFoundException, AppServerException {
+        try {
+            User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(adminUserUuid);
+
+            if (userRepository.findByUuid(adminUserUuid).isEmpty()) {
+                throw new AppObjectNotFoundException("User", "User with UUID: " + adminUserUuid + " does not exist");
+            }
+
+
+            User userToDelete = userRepository.findByUuid(userToDeleteUuid).orElseThrow(() -> new AppObjectNotFoundException("User", "User with UUID: " + userToDeleteUuid + " was not found"));
+
+            if (!principalUser.getRole().equals(Role.ADMIN)) {
+                throw new AccessDeniedException("Access denied while trying to delete user with UUID: " + userToDeleteUuid);
+            }
+
+            userToDelete.setIsDeleted(true);
+            return mapper.mapToUserReadOnlyDTO(userRepository.save(userToDelete));
+
+        } catch (AppObjectNotFoundException e) {
+            LOGGER.warn("Error while trying to delete user with UUID: {}, user was not found", userToDeleteUuid);
+            throw e;
+        } catch (AccessDeniedException e) {
+            LOGGER.warn("Non-ADMIN user tried to delete user with UUID: {}", userToDeleteUuid);
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while trying to delete user with UUID: {}", userToDeleteUuid);
+            throw new AppServerException("Unexpected error while deleting user. ERROR: " + e.getMessage());
+        }
+    }
+
+    private List<EventReadOnlyDTO> getAttendedEventsByUserUuidByStatus(String userUuid, Status status) throws AppObjectNotFoundException, AppServerException {
+        try {
+            // Check if the user exists
+            if (userRepository.findByUuid(userUuid).isEmpty()) {
+                throw new AppObjectNotFoundException("User", "User with UUID: " + userUuid + " does not exist");
+            }
+
+            // Fetch attended events
+            List<Event> attendedEvents = eventRepository.findByAttendeesUuid(userUuid)
+                    .stream().filter(event -> event.getStatus().equals(status))
+                    .toList();
+
+            LOGGER.info("Events attended by user with UUID: {}, were fetched. Number of events: {}",
+                    userUuid, attendedEvents.size());
+
+            // Map to DTO and return
+            return mapper.mapToEventReadOnlyDTO(attendedEvents);
+        } catch (AppObjectNotFoundException e) {
+            LOGGER.warn("Events for user with UUID: {} were not fetched. {}", userUuid, e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new AppServerException("An unexpected error occurred. ERROR: " + e.getMessage());
+        }
+    }
     protected void saveUserImage(MultipartFile imageFile, Event eventToSave) throws IOException, AppObjectInvalidArgumentException, AppServerException {
         String fileName = imageFile.getOriginalFilename();
         String extension = getFileExtension(fileName);
@@ -261,7 +381,6 @@ public class EventService {
     }
 
 
-
     private boolean isEventFull(Event event) {
         return Objects.equals(event.getMaxSeats(), event.getBookedSeats());
     }
@@ -269,5 +388,6 @@ public class EventService {
     private boolean isEventUnavailable(Event event) {
         return event.getStatus() != Status.PENDING;
     }
+
 }
 

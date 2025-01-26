@@ -1,66 +1,17 @@
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
-<p>events works!</p>
+<div>
+    <section class="event-controls">
+        <button (click)="prevPage()" [disabled]="currentPage() === 0">Previous</button>
+        <button (click)="nextPage()" [disabled]="currentPage() === totalPages() - 1">Next</button>
+    </section>
+
+    <section id="events">
+        <h2>Pending Events (Page {{ currentPage() + 1 }} of {{ totalPages() }})</h2>
+        <ul>
+            @for (event of events(); track event.uuid) {
+                <li>
+                    <app-event-compact [event]="event"></app-event-compact>
+                </li>
+            }
+        </ul>
+    </section>
+</div>

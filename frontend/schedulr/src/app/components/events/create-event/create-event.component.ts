@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from "../../../shared/services/auth.service";
 import { EventService } from "../../../shared/services/event.service";
+import {EventCreate} from "../../../shared/interfaces/Event";
 
 @Component({
   selector: 'app-create-event',
@@ -19,7 +20,7 @@ export class CreateEventComponent {
   authService = inject(AuthService);
   eventService = inject(EventService);
   
-  loggedInUserUuid = this.authService.loggedInUserData()?.uuid;
+  loggedInUserUuid = this.authService.loggedInUserUuid()
   
   categories = ['CONCERT', 'CONFERENCE', 'EXHIBITION', 'NETWORKING', 'PARTY', 'SPORTS'];
   
@@ -47,7 +48,7 @@ export class CreateEventComponent {
       return;
     }
     
-    const createEvent = {
+    const createEvent: EventCreate = {
       title: this.form.value.title!,
       description: this.form.value.description!,
       date: this.form.value.date!,
@@ -57,18 +58,8 @@ export class CreateEventComponent {
       category: this.form.value.category!,
     };
     
-    const uuid = this.loggedInUserUuid!;
+    const uuid = this.loggedInUserUuid!.toString();
     const imageFile = this.form.value.imageFile || undefined;
-    // console.log(imageFile)
-    
-    const formData = new FormData();
-    formData.append('createDTO', JSON.stringify(createEvent));
-    formData.append('uuid', uuid);
-    if (imageFile) {
-      formData.append('imageFile', imageFile);
-    }
-    
-    console.log(formData)
     
     const subscription = this.eventService.createEvent(createEvent, uuid, imageFile).subscribe({
       next: (response) => {
