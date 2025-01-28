@@ -4,4 +4,7 @@
         <time class="date">{{ comment.date | date: 'MM/dd/YYYY' }} at {{ comment.date | date: 'h:mm a' }}</time>
     </div>
     <p class="description">{{ comment.description }}</p>
+    @if(isEnabled()) {
+        <button class="delete-button" (click)="deleteComment()">DELETE</button>
+    }
 </div>

@@ -22,6 +22,18 @@ export const loggedInGuard: CanActivateFn = (route, state) => {
         return true;
     }
     
-    router.navigate(['tasks']);
+    router.navigate(['events']);
+    return false;
+}
+
+export const isAdminGuard: CanActivateFn = (route, state) => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+    
+    if (authService.loggedInUserRole() === 'ADMIN') {
+        return true;
+    }
+    
+    router.navigate(['resource-forbidden']);
     return false;
 }

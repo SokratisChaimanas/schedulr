@@ -1,8 +1,10 @@
+/* resource-not-found.component.css */
+
 html, body {
-    height: 100%; /* Ensure full height for both html and body */
+    height: 100%;
     margin: 0;
     display: flex;
-    flex-direction: column; /* Set up a vertical column layout */
+    flex-direction: column;
 }
 
 body {
@@ -12,13 +14,10 @@ body {
 }
 
 main {
-    flex: 1; /* Make the main content area flexible to push the footer down */
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     padding: 1rem;
-    /*width: 100%;*/
 }
-
-

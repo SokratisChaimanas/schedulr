@@ -2,9 +2,6 @@ package gr.myprojects.schedulr.service;
 
 import gr.myprojects.schedulr.core.exceptions.*;
 import gr.myprojects.schedulr.core.util.ServiceUtil;
-import gr.myprojects.schedulr.dto.user.UserReadOnlyDTO;
-import gr.myprojects.schedulr.service.UserService;
-import gr.myprojects.schedulr.core.enums.Role;
 import gr.myprojects.schedulr.core.enums.Status;
 import gr.myprojects.schedulr.core.filters.EventFilters;
 import gr.myprojects.schedulr.core.filters.Paginated;
@@ -22,13 +19,8 @@ import gr.myprojects.schedulr.specifications.EventSpecification;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -161,13 +153,62 @@ public class EventService {
         }
     }
 
-    public Page<EventReadOnlyDTO> getPaginatedEventsByStatus(Status status, int page, int size) {
-        Pageable pageable = Pageable.ofSize(size).withPage(page);
-        Page<Event> events = eventRepository.findByStatus(status, pageable);
+    @Transactional(rollbackFor = Exception.class)
+    public Page<EventReadOnlyDTO> getPaginatedPendingEvents(int page, int size, String userUuid) throws AppObjectNotFoundException, AppServerException {
+        try {
+            // Ensure user is authenticated and principal is retrieved
+            User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(userUuid);
 
+            // Set up pagination parameters
+            Pageable pageable = PageRequest.of(page, size);
 
-        return events.map(mapper::mapToEventReadOnlyDTO);
+            // Fetch events based on the given status
+            Page<Event> eventsPage = eventRepository.findByStatus(Status.PENDING, pageable);
+
+            // Filter events to exclude those the user is already attending
+            List<Event> filteredEvents = eventsPage.getContent().stream()
+                    .filter(event -> event.getAttendees().stream()
+                            .noneMatch(attendee -> attendee.getUuid().equals(principalUser.getUuid())))
+                    .toList();
+
+            // Convert the filtered list back into a pageable format
+            Page<EventReadOnlyDTO> resultPage = new PageImpl<>(filteredEvents, pageable, eventsPage.getTotalElements())
+                    .map(mapper::mapToEventReadOnlyDTO);
+
+            LOGGER.info("Successfully fetched paginated events for user: {}", userUuid);
+            return resultPage;
+
+        } catch (AppObjectNotFoundException e) {
+            LOGGER.error("User with UUID: {} not found. Error: {}", userUuid, e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while fetching paginated events by status for user with UUID: {}. Error: {}", userUuid, e.getMessage());
+            throw new AppServerException("An unexpected error occurred while fetching events. ERROR: " + e.getMessage());
+        }
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<EventReadOnlyDTO> getAllEventsByStatus(String userUuid, String status) throws AppObjectNotFoundException, AppServerException {
+        try {
+            // Ensure user is authenticated and principal is retrieved
+            User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(userUuid);
+
+            List<EventReadOnlyDTO> eventReadOnlyDTOList = eventRepository.findByStatus(Status.valueOf(status))
+                            .stream().map(mapper::mapToEventReadOnlyDTO).toList();
+
+            LOGGER.info("Successfully fetched paginated events by status: {} for user: {}", status, userUuid);
+            return eventReadOnlyDTOList;
+
+        } catch (AppObjectNotFoundException e) {
+            LOGGER.error("User with UUID: {} not found when fetching all events. Error: {}", userUuid, e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while fetching all events by status for user with UUID: {}. Error: {}", userUuid, e.getMessage());
+            throw new AppServerException("An unexpected error occurred while fetching events. ERROR: " + e.getMessage());
+        }
+    }
+
+
 
 
     @Transactional
@@ -193,13 +234,13 @@ public class EventService {
     }
 
     private ImageAttachment saveDefaultImage() {
-        String uploadDir = "static/";
-        String defaultImageName = "NoImageProvided";
-        String defaultImageExtension = "svg";
-        String defaultImageContentType = "/image/svg";
+        String uploadDir = "C:/tmp/schedulr/img/";
+        String defaultImageName = "NoImage";
+        String defaultImageExtension = ".jpg";
+        String defaultImageContentType = "/image/jpeg";
         return ImageAttachment.builder()
                 .fileName(defaultImageName)
-                .savedName(defaultImageName)
+                .savedName(defaultImageName + defaultImageExtension)
                 .contentType(defaultImageContentType)
                 .extension(defaultImageExtension)
                 .filePath(Paths.get(uploadDir + defaultImageName).toString())
@@ -267,37 +308,6 @@ public class EventService {
     @Transactional(rollbackFor = Exception.class)
     public List<EventReadOnlyDTO> getCanceledEventsByUserUuid(String userUuid) throws AppObjectNotFoundException, AppServerException {
         return getAttendedEventsByUserUuidByStatus(userUuid, Status.CANCELED);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public UserReadOnlyDTO deleteUser(String adminUserUuid, String userToDeleteUuid) throws AccessDeniedException, AppObjectNotFoundException, AppServerException {
-        try {
-            User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(adminUserUuid);
-
-            if (userRepository.findByUuid(adminUserUuid).isEmpty()) {
-                throw new AppObjectNotFoundException("User", "User with UUID: " + adminUserUuid + " does not exist");
-            }
-
-
-            User userToDelete = userRepository.findByUuid(userToDeleteUuid).orElseThrow(() -> new AppObjectNotFoundException("User", "User with UUID: " + userToDeleteUuid + " was not found"));
-
-            if (!principalUser.getRole().equals(Role.ADMIN)) {
-                throw new AccessDeniedException("Access denied while trying to delete user with UUID: " + userToDeleteUuid);
-            }
-
-            userToDelete.setIsDeleted(true);
-            return mapper.mapToUserReadOnlyDTO(userRepository.save(userToDelete));
-
-        } catch (AppObjectNotFoundException e) {
-            LOGGER.warn("Error while trying to delete user with UUID: {}, user was not found", userToDeleteUuid);
-            throw e;
-        } catch (AccessDeniedException e) {
-            LOGGER.warn("Non-ADMIN user tried to delete user with UUID: {}", userToDeleteUuid);
-            throw e;
-        } catch (Exception e) {
-            LOGGER.error("Unexpected error while trying to delete user with UUID: {}", userToDeleteUuid);
-            throw new AppServerException("Unexpected error while deleting user. ERROR: " + e.getMessage());
-        }
     }
 
     private List<EventReadOnlyDTO> getAttendedEventsByUserUuidByStatus(String userUuid, Status status) throws AppObjectNotFoundException, AppServerException {

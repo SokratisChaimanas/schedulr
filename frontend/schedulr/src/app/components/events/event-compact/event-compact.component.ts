@@ -16,9 +16,13 @@ import {Router} from "@angular/router";
 export class EventCompactComponent {
   @Input({ required: true }) event!: EventReadOnly;
   
-  router = inject(Router)
+  router = inject(Router);
+  
+  isEventFull(): boolean {
+    return this.event.bookedSeats === this.event.maxSeats;
+  }
   
   onClick() {
-    this.router.navigate(['/event'], { queryParams: { 'uuid': this.event.uuid }});
+     this.router.navigate(['/event'], { queryParams: { 'uuid': this.event.uuid } });
   }
 }

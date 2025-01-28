@@ -1,4 +1,4 @@
-import {Injectable, inject, signal} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { SuccessResponse } from '../interfaces/Response';
@@ -10,7 +10,7 @@ import {
     EventReadOnly,
 } from '../interfaces/Event';
 import { Paginated } from '../interfaces/Paginated';
-import {AuthService} from "./auth.service";
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root',
@@ -18,6 +18,7 @@ import {AuthService} from "./auth.service";
 export class EventService {
     private http = inject(HttpClient);
     private API_URL_EVENTS = 'http://localhost:8080/api/events';
+    private API_URL_ADMIN = 'http://localhost:8080/api/admin'
     
     createEvent(createEvent: EventCreate, uuid: string, imageFile?: File) {
         const formData = new FormData();
@@ -27,9 +28,6 @@ export class EventService {
             formData.append('imageFile', imageFile);
         }
         
-        console.log(formData.get('createDTO'));
-        console.log(formData.get('uuid'));
-        console.log(formData.get('imageFile'));
         return this.http
             .post<SuccessResponse<EventReadOnly>>(`${this.API_URL_EVENTS}/create`, formData)
             .pipe(map((response) => response));
@@ -47,12 +45,25 @@ export class EventService {
             .pipe(map((response) => response));
     }
     
-    getPaginatedEvents(page = 0, size = 10, status: String = 'PENDING') {
+    getPaginatedEvents(page = 0, size = 10, uuid: string) {
         return this.http
             .get<SuccessResponse<Paginated<EventReadOnly>>>(
-                `${this.API_URL_EVENTS}?page=${page}&size=${size}&status=${status}`
+                `${this.API_URL_EVENTS}?page=${page}&size=${size}&userUuid=${uuid}`
             )
-            .pipe(map((response) => response.data));
+            .pipe(
+                map((response) => ({
+                    ...response.data,
+                    items: this.sortEventsByClosestDate(response.data.content),
+                }))
+            );
+    }
+    
+    getEventsByStatus(userUuid: string, status: string) {
+        return this.http
+            .get<SuccessResponse<EventReadOnly[]>>(
+                `${this.API_URL_ADMIN}/events/status?userUuid=${userUuid}&status=${status}`
+            )
+            .pipe(map((response) => this.sortEventsByClosestDate(response.data)));
     }
     
     getPaginatedFilteredEvents(filterDTO: EventFilter, page = 0, size = 10) {
@@ -61,13 +72,18 @@ export class EventService {
                 `${this.API_URL_EVENTS}/filters/paginated?page=${page}&size=${size}`,
                 filterDTO
             )
-            .pipe(map((response) => response));
+            .pipe(
+                map((response) => ({
+                    ...response.data,
+                    items: this.sortEventsByClosestDate(response.data.content),
+                }))
+            );
     }
     
     getFilteredEvents(filterDTO: EventFilter) {
         return this.http
             .post<SuccessResponse<EventReadOnly[]>>(`${this.API_URL_EVENTS}/filters`, filterDTO)
-            .pipe(map((response) => response));
+            .pipe(map((response) => this.sortEventsByClosestDate(response.data)));
     }
     
     getEventByUuid(eventUuid: string) {
@@ -78,10 +94,8 @@ export class EventService {
     
     getOwnedEvents(userUuid: string) {
         return this.http
-            .get<SuccessResponse<EventReadOnly[]>>(
-                `${this.API_URL_EVENTS}/user/${userUuid}/owned`
-            )
-            .pipe(map((response) => response.data));
+            .get<SuccessResponse<EventReadOnly[]>>(`${this.API_URL_EVENTS}/user/${userUuid}/owned`)
+            .pipe(map((response) => this.sortEventsByClosestDate(response.data)));
     }
     
     getPendingAttendedEvents(userUuid: string) {
@@ -89,9 +103,7 @@ export class EventService {
             .get<SuccessResponse<EventReadOnly[]>>(
                 `${this.API_URL_EVENTS}/user/${userUuid}/attended-pending`
             )
-            .pipe(map((response) => {
-                return response.data
-            }));
+            .pipe(map((response) => this.sortEventsByClosestDate(response.data)));
     }
     
     getCompletedAttendedEvents(userUuid: string) {
@@ -99,7 +111,7 @@ export class EventService {
             .get<SuccessResponse<EventReadOnly[]>>(
                 `${this.API_URL_EVENTS}/user/${userUuid}/attended-completed`
             )
-            .pipe(map((response) => response.data));
+            .pipe(map((response) => this.sortEventsByClosestDate(response.data)));
     }
     
     getCanceledAttendedEvents(userUuid: string) {
@@ -107,6 +119,14 @@ export class EventService {
             .get<SuccessResponse<EventReadOnly[]>>(
                 `${this.API_URL_EVENTS}/user/${userUuid}/attended-canceled`
             )
-            .pipe(map((response) => response.data));
+            .pipe(map((response) => this.sortEventsByClosestDate(response.data)));
+    }
+    
+    private sortEventsByClosestDate(events: EventReadOnly[]): EventReadOnly[] {
+        return events.sort(
+            (a, b) =>
+                Math.abs(new Date(a.date).getTime() - Date.now()) -
+                Math.abs(new Date(b.date).getTime() - Date.now())
+        );
     }
 }

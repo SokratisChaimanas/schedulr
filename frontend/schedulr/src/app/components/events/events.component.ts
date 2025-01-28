@@ -2,6 +2,7 @@ import {Component, inject, OnInit, signal} from '@angular/core';
 import {EventService} from "../../shared/services/event.service";
 import {EventReadOnly} from "../../shared/interfaces/Event";
 import {EventCompactComponent} from "./event-compact/event-compact.component";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-events',
@@ -13,19 +14,21 @@ import {EventCompactComponent} from "./event-compact/event-compact.component";
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  private eventService = inject(EventService);
+  eventService = inject(EventService);
+  authService = inject(AuthService)
   
   events = signal<EventReadOnly[]>([]);
   totalPages = signal<number>(0);
   currentPage = signal<number>(0);
   pageSize = signal<number>(10);
   
+  
   ngOnInit() {
     this.loadEvents(this.currentPage());
   }
   
   loadEvents(page: number) {
-    this.eventService.getPaginatedEvents(page, this.pageSize()).subscribe({
+    this.eventService.getPaginatedEvents(page, this.pageSize() , this.authService.loggedInUserUuid()!).subscribe({
       next: response => {
         this.events.set(response.content);
         console.log(response.content)

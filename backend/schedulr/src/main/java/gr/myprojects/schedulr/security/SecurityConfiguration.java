@@ -48,7 +48,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/swagger-ui.html", "/webjars/**", "/swagger-resources/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/events/**").hasAnyAuthority(Role.SIMPLE_USER.name(), Role.ADMIN.name())
-                        .requestMatchers("/api/user/**").hasAnyAuthority(Role.SIMPLE_USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/api/admin/**").hasAnyAuthority(Role.ADMIN.name())
                         .requestMatchers("/api/comments/**").hasAnyAuthority(Role.SIMPLE_USER.name(), Role.ADMIN.name())
                         .requestMatchers("/**").permitAll()
                 )

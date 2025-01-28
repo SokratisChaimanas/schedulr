@@ -1,8 +1,6 @@
 package gr.myprojects.schedulr.rest;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import gr.myprojects.schedulr.core.enums.Status;
 import gr.myprojects.schedulr.core.exceptions.*;
 import gr.myprojects.schedulr.core.filters.Paginated;
@@ -120,10 +118,10 @@ public class EventRestController {
     @GetMapping("")
     public ResponseEntity<SuccessResponseDTO<Page<EventReadOnlyDTO>>> getPaginatedEvents(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-//            @RequestParam(defaultValue = "PENDING") Status status
-    ) {
-        Page<EventReadOnlyDTO> events = eventService.getPaginatedEventsByStatus(Status.PENDING, page, size);
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam String userUuid
+    ) throws AppObjectNotFoundException, AppServerException {
+        Page<EventReadOnlyDTO> events = eventService.getPaginatedPendingEvents(page, size, userUuid);
         SuccessResponseDTO<Page<EventReadOnlyDTO>> successResponseDTO = SuccessResponseDTO.<Page<EventReadOnlyDTO>>builder()
                 .status(HttpStatus.OK)
                 .data(events)

@@ -19,20 +19,19 @@ export class AuthService {
   constructor() {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      this.decodeToken(authToken);
+      this.decodeToken(authToken)
     }
   }
   
   decodeToken(token: string) {
-    const decodedToken = jwtDecode<JwtPayload>(token);
-   
-    if (decodedToken) {
-      this.loggedInUserUsername.set(decodedToken.sub!); // Map the subject to username
-      this.loggedInUserUuid.set(decodedToken.uuid!); // Extract UUID
-      this.loggedInUserRole.set(decodedToken.role!); // Extract Role
-    } else {
-      console.error('Failed to decode token');
+    const decodedToken = jwtDecode<JwtPayload>(token)
+    if (this.isTokenExpired(decodedToken.exp)) {
+      this.removeToken()
+      return
     }
+    this.loggedInUserUsername.set(decodedToken.sub!); // Map the subject to username
+    this.loggedInUserUuid.set(decodedToken.uuid!); // Extract UUID
+    this.loggedInUserRole.set(decodedToken.role!); // Extract Role
   }
   
   registerUser(userdata: UserRegister) {
@@ -46,8 +45,7 @@ export class AuthService {
         map(response => {
           this.storeToken(response.data.token);
           this.decodeToken(response.data.token)
-          console.log('USER UUID: ' + this.loggedInUserUuid)
-          return response;
+          return response
         })
     );
   }
@@ -59,5 +57,12 @@ export class AuthService {
   removeToken() {
     localStorage.removeItem('authToken');
     this.loggedInUserUsername.set(null);
+    this.loggedInUserUuid.set(null)
+    this.loggedInUserRole.set(null)
+  }
+  
+   private isTokenExpired = (exp: number) => {
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+    return exp < currentTime;
   }
 }

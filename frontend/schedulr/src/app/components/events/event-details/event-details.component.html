@@ -3,11 +3,12 @@
         <div class="event-container">
             <img
                 class="event-image"
-                src="logo.png"
+                [src]="'http://localhost:8080/images/' + this.event!.imageAttachmentReadOnlyDTO.savedName"
                 [alt]="event.title + ' LOGO'"
             />
             <div class="event-details">
                 <h1>{{ event.title }}</h1>
+                <p class="owner">By: {{ eventOwner!.username }}</p>
                 <p class="description">{{ event.description }}</p>
                 <div class="info">
                     <p class="category">Category: {{ event.category }}</p>
@@ -18,22 +19,61 @@
                     <p class="seats">
                         Seats: <span class="booked">{{ event.bookedSeats }}</span>/<span class="max">{{ event.maxSeats }}</span>
                     </p>
-                    @if (!isAttending) {
-                        <button class="attend-btn" (click)="attendEvent()">Attend</button>
+
+                    @if (event.status === 'CANCELED') {
+                        <p class="status-message canceled">This event has been canceled.</p>
                     } @else {
-                        <button class="attend-btn" disabled>You are attending</button>
+                        @if (event.bookedSeats === event.maxSeats) {
+                            <p class="full-notice">This event is full. No seats are available.</p>
+                        } @else {
+                            @if (!isAttending) {
+                                <button class="attend-btn" (click)="attendEvent()">Attend</button>
+                            } @else {
+                                <button class="attend-btn" disabled>You are attending</button>
+                            }
+                        }
+                    }
+
+                    @if (isUserOwner() || this.authService.loggedInUserRole() === 'ADMIN') {
+                        <button
+                            class="cancel-btn"
+                            [disabled]="event.status === 'CANCELED'"
+                            (click)="cancelEvent()"
+                        >
+                            Cancel Event
+                        </button>
                     }
                 </div>
             </div>
         </div>
 
+
+        @if (event.status !== 'CANCELED') {
+            <div class="add-comment-section">
+                <textarea
+                    class="comment-textarea"
+                    [(ngModel)]="newComment"
+                    placeholder="Write a comment..."
+                ></textarea>
+                <button
+                    class="comment-btn"
+                    [disabled]="!newComment || newComment.trim() === ''"
+                    (click)="addComment()"
+                >
+                    Add Comment
+                </button>
+            </div>
+        }
+
+        <!-- Comments Section -->
         @if (event.commentsList && event.commentsList.length > 0) {
             <div class="comments-section">
                 <h2>Comments</h2>
                 <ul>
                     @for (comment of event.commentsList; track comment.uuid) {
                         <li>
-                            <app-comment [comment]="comment"></app-comment>
+                            <app-comment [comment]="comment"
+                                         (commentDeleted)="onCommentDeleted($event)"/>
                         </li>
                     }
                 </ul>

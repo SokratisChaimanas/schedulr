@@ -1,6 +1,8 @@
 /* Main Event Details */
 .event-details-container {
-    max-width: 800px;
+    max-width: 1000%;
+    width: 650px;
+    /*height: 0.5%;*/
     margin: 2rem auto;
     padding: 1rem;
     background-color: #5e2a84; /* Softer purple background */
@@ -10,6 +12,8 @@
 
 /* Event Container */
 .event-container {
+    width: 650px;
+    /*height: 100%;*/
     display: flex;
     background-color: #6b2f91; /* Lighter purple for better contrast */
     border-radius: 12px;
@@ -19,8 +23,8 @@
 }
 
 .event-image {
-    width: 200px;
-    height: 200px;
+    width: 50%; /* Smaller size */
+    /*height: 1%;*/
     object-fit: cover;
     border-right: 2px solid #e1bee7; /* Light purple border for balance */
 }
@@ -28,7 +32,7 @@
 .event-details {
     padding: 1.5rem;
     flex: 1;
-    color: #f3e8ff;
+    color: #151515;
 }
 
 .event-details h1 {
@@ -68,6 +72,57 @@
 .seats .max {
     font-weight: normal;
     color: #d3bff6; /* Muted light purple */
+}
+
+/* Add Comment Section */
+.add-comment-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #5d208a; /* Darker purple for separation */
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid #c5a7e3;
+    border-radius: 8px;
+    color: #fff;
+    background-color: #6b2f91;
+    margin-bottom: 1rem;
+}
+
+.comment-textarea:focus {
+    outline: none;
+    border-color: #ff9ee3; /* Focus border */
+    box-shadow: 0 0 4px rgba(255, 158, 227, 0.5);
+}
+
+.comment-btn {
+    background-color: #ff9ee3; /* Soft pink similar to booked seats */
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: background-color 0.3s;
+}
+
+.comment-btn:disabled {
+    background-color: #a7739f; /* Disabled state */
+    cursor: not-allowed;
+}
+
+.comment-btn:hover:enabled {
+    background-color: #f19be8; /* Lighter pink on hover */
 }
 
 /* Comments Section */
@@ -112,36 +167,95 @@
     line-height: 1.5;
 }
 
-/* Hover Effects */
-.event-container:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
 .comment:hover {
     transform: translateY(-2px);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Attend Button */
 .attend-btn {
-    display: inline-block;
-    background-color: #ff9ee3; /* Soft pink similar to booked seats */
-    color: #ffffff;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: background-color 0.3s;
+    background-color: #ff9ee3; /* Soft pink */
+    color: #ffffff; /* White text for contrast */
+    padding: 8px 20px; /* Comfortable button size */
+    font-size: 1rem; /* Readable font size */
+    /*font-weight: bold; !* Make the text stand out *!*/
+    text-transform: uppercase; /* Adds a professional touch */
+    border: none; /* Clean look */
+    border-radius: 12px; /* Smooth rounded edges */
+    cursor: pointer; /* Indicates interactivity */
+    transition: all 0.3s ease; /* Smooth hover animation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
 .attend-btn:hover {
     background-color: #f19be8; /* Slightly lighter pink on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Emphasized shadow */
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.attend-btn:disabled {
+    background-color: #a7739f; /* Muted purple for disabled state */
+    color: #e6c6e9; /* Softer text color */
+    cursor: not-allowed; /* Indicate it's disabled */
+    box-shadow: none; /* Flat appearance */
 }
 
 .attend-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(255, 158, 227, 0.5); /* Soft glow on focus */
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 8px rgba(255, 158, 227, 0.8); /* Glow effect */
 }
+
+.full-notice {
+    color: #ff6161; /* Red color for the full notice */
+    font-weight: bold;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+}
+
+/* Cancel Button */
+.cancel-btn {
+    background-color: #ff6161; /* Red for cancellation */
+    color: #ffffff; /* White text for contrast */
+    padding: 10px 20px; /* Comfortable size */
+    font-size: 1rem; /* Readable font size */
+    border: none; /* Clean look */
+    border-radius: 8px; /* Rounded edges */
+    cursor: pointer; /* Interactive cursor */
+    margin-top: 1rem; /* Spacing */
+    margin-left: 2rem;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.cancel-btn:hover:enabled {
+    background-color: #ff4242; /* Darker red on hover */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+.cancel-btn:disabled {
+    background-color: #a7739f; /* Muted purple for disabled state */
+    color: #e6c6e9; /* Softer text color */
+    cursor: not-allowed; /* Indicate it's disabled */
+    box-shadow: none; /* Flat appearance */
+}
+
+.event-details .owner {
+    font-size: 1rem;
+    color: #e6c7ff; /* Subtle purple for the owner */
+    margin-bottom: 1rem;
+}
+
+/* Status Message */
+.status-message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.status-message.canceled {
+    color: #ffffff;
+    background-color: #ff6161; /* Red for canceled status */
+}
+

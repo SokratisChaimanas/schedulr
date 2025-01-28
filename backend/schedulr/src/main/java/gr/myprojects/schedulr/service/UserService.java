@@ -62,6 +62,37 @@ public class UserService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public UserReadOnlyDTO deleteUser(String adminUserUuid, String userToDeleteUuid) throws AccessDeniedException, AppObjectNotFoundException, AppServerException {
+        try {
+            User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(adminUserUuid);
+
+            if (userRepository.findByUuid(adminUserUuid).isEmpty()) {
+                throw new AppObjectNotFoundException("User", "User with UUID: " + adminUserUuid + " does not exist");
+            }
+
+
+            User userToDelete = userRepository.findByUuid(userToDeleteUuid).orElseThrow(() -> new AppObjectNotFoundException("User", "User with UUID: " + userToDeleteUuid + " was not found"));
+
+            if (!principalUser.getRole().equals(Role.ADMIN)) {
+                throw new AccessDeniedException("Access denied while trying to delete user with UUID: " + userToDeleteUuid);
+            }
+
+            userToDelete.setIsDeleted(true);
+            return mapper.mapToUserReadOnlyDTO(userRepository.save(userToDelete));
+
+        } catch (AppObjectNotFoundException e) {
+            LOGGER.warn("Error while trying to delete user with UUID: {}, user was not found", userToDeleteUuid);
+            throw e;
+        } catch (AccessDeniedException e) {
+            LOGGER.warn("Non-ADMIN user tried to delete user with UUID: {}", userToDeleteUuid);
+            throw e;
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error while trying to delete user with UUID: {}", userToDeleteUuid);
+            throw new AppServerException("Unexpected error while deleting user. ERROR: " + e.getMessage());
+        }
+    }
+
 
 
 

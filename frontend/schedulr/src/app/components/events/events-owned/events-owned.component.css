@@ -9,7 +9,7 @@
 .event-controls button {
     font: inherit;
     cursor: pointer;
-    background-color: #28a745;
+    background-color: #007bff;
     color: #fff;
     border-radius: 4px;
     border: none;
@@ -18,9 +18,13 @@
     transition: background-color 0.3s ease;
 }
 
+.event-controls button.active {
+    background-color: #0056b3;
+}
+
 .event-controls button:hover,
 .event-controls button:active {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 
 .event-controls button:disabled {
@@ -42,15 +46,15 @@
 
 #events ul {
     list-style: none;
-    /*width: 100%;*/
     padding: 0;
 }
 
 #events li {
-    /*border: 2px solid #ccc;*/
-    /*border-radius: 2px;*/
     padding: 1rem;
     margin-bottom: 1rem;
+    /*border: 1px solid #ddd;*/
+    /*border-radius: 8px;*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #events li h3 {
@@ -61,4 +65,24 @@
 #events li p {
     margin: 0.5rem 0;
     color: #6c757d;
+}
+
+/* No Events Styles */
+.no-events {
+    text-align: center;
+    color: #6c757d;
+    margin-top: 2rem;
+    padding: 2rem 1rem;
+}
+
+.no-events-image {
+    width: 300px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.no-events-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0;
 }

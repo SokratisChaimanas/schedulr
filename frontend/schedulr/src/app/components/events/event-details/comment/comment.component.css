@@ -40,3 +40,26 @@
 .comment-container p {
     margin: 0;
 }
+
+/* Delete Button Styles */
+.delete-button {
+    background-color: #ff4d4f; /* Bright red for delete */
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: #d9363e; /* Slightly darker red for hover effect */
+    transform: scale(1.05);
+}
+
+.delete-button:active {
+    background-color: #b0252d; /* Even darker red for active state */
+    transform: scale(1);
+}

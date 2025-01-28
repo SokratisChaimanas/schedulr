@@ -13,5 +13,6 @@ export interface JwtPayload {
     sub?: string; // Username
     uuid?: string; // UUID
     role?: string; // Role
+    exp: number
     // [key: string]: any; // Other optional fields
 }

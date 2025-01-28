@@ -2,14 +2,23 @@
     <a routerLink="/events"><img src="logo.png" alt="Schedulr Logo" /></a>
     <h1>SchedulR</h1>
     <p>Plan and organize your events with ease</p>
-    @if (loggedInUser()) {
+
+    @if (loggedInUserUsername()) {
+        <!-- User Info Section -->
+        <div class="user-info">
+            <p>Welcome, <span class="username">{{ loggedInUserUsername() }}</span></p>
+        </div>
+
         <!-- Navigation Bar -->
         <nav>
             <ul>
                 <li><a routerLink="/events">Home</a></li>
                 <li><a routerLink="/events/create">Create Event</a></li>
                 <li><a routerLink="/events/owned">My Events</a></li>
-                <li><a routerLink="/events/attenting/pending">My Attends</a></li>
+                <li><a routerLink="/events/attending">My Attends</a></li>
+                @if (loggedInUserRole() === 'ADMIN') {
+                    <li><a routerLink="events/all">All Events</a></li>
+                }
                 <li><a routerLink="/login" (click)="onLogout()">Logout</a></li>
             </ul>
         </nav>

@@ -20,4 +20,6 @@ public interface EventRepository extends JpaRepository<Event, Integer>, JpaSpeci
 
     Page<Event> findByStatus(Status status, Pageable pageable);
 
+    List<Event> findByStatus(Status status);
+
 }

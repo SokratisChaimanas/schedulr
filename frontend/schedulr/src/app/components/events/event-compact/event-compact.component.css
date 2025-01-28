@@ -1,12 +1,12 @@
 .event-container {
     display: flex;
-    max-width: 90%;
+    width: 700px;
     background-color: #4c2a85; /* Darker purple for better contrast */
-    /*border-radius: px;*/
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin: 0.5rem;
+    border-radius: 10px;
 }
 
 .event-container:hover {
@@ -14,9 +14,15 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
+.event-container.full {
+    opacity: 0.7;
+    pointer-events: none;
+    background-color: #6b6b6b;
+}
+
 .event-image {
-    width: 35%;
-    height: 200px;
+    width: 50%;
+    height: 300px;
     object-fit: fill;
     border-right: 2px solid #bf9ee5;
 }
@@ -69,4 +75,16 @@ time {
 .seats .max {
     font-weight: normal;
     color: #d3bff6;
+}
+
+.full-notice {
+    color: #ff6961; /* Red for emphasis */
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.event-details .owner {
+    font-size: 1rem;
+    color: #e6c7ff; /* Subtle purple for the owner */
+    margin-bottom: 1rem;
 }

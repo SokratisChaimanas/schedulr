@@ -1,0 +1,35 @@
+<div>
+    <section class="event-controls">
+        <button
+            (click)="loadEvents('PENDING')"
+            [class.active]="currentStatus() === 'PENDING'">
+            PENDING
+        </button>
+        <button
+            (click)="loadEvents('COMPLETED')"
+            [class.active]="currentStatus() === 'COMPLETED'">
+            COMPLETED
+        </button>
+        <button
+            (click)="loadEvents('CANCELED')"
+            [class.active]="currentStatus() === 'CANCELED'">
+            CANCELED
+        </button>
+    </section>
+
+    <section id="events">
+        <h2>{{ currentStatus() }} EVENTS</h2>
+        @if (events().length === 0) {
+            <div class="no-events">
+                <img src=no_events.webp alt="No Events" class="no-events-image">
+                <p class="no-events-text">No events to display for this status. Check back later!</p>
+            </div>
+        } @else {
+            @for (event of events(); track event.uuid) {
+                <li>
+                    <app-event-compact [event]="event"></app-event-compact>
+                </li>
+            }
+        }
+    </section>
+</div>
