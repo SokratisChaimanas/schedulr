@@ -13,7 +13,7 @@
         <div class="info">
             <p class="category">Category: {{ event.category }}</p>
             <time>
-                Date: {{ event.date | date: 'MM/dd/YYYY' }} at {{ event.date | date: 'h:mm a' }}
+                Date: {{ event.date | date: 'dd/MM/YYYY' }} at {{ event.date | date: 'h:mm a' }}
             </time>
             <p>Price: {{ event.price | currency }}</p>
             <p class="seats">

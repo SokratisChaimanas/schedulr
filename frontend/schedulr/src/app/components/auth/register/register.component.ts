@@ -106,9 +106,9 @@ export class RegisterComponent {
         this.router.navigate(['login'], {queryParams: {'was-registered': response.data.uuid}});
       },
       error: error => {
-        if ( error.status === 'CONFLICT') {
+        if (error.code === 'UserAlreadyExists') {
           
-          if (error.message.includes('username')) {
+          if (error.message.includes('username ')) {
             this.form.get('username')?.setErrors({usernameExists: true});
             this.form.updateValueAndValidity();
             return;
@@ -117,8 +117,6 @@ export class RegisterComponent {
             this.form.updateValueAndValidity();
             return;
           }
-        } else {
-        
         }
       }
     });

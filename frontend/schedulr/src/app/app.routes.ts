@@ -15,6 +15,7 @@ import {
     ResourceForbidden
 } from "./components/error-pages/resource-not-availabe/resource-forbidden";
 import {EventsAllComponent} from "./components/events/events-all/events-all.component";
+import {BadRequestComponent} from "./components/error-pages/bad-request/bad-request.component";
 
 
 export const routes: Routes = [
@@ -30,6 +31,7 @@ export const routes: Routes = [
     { path: 'resource-not-found', component: ResourceNotFoundComponent, canActivate: [authGuard]},
     { path: 'resource-forbidden', component: ResourceForbidden, canActivate: [authGuard]},
     { path: 'unexpected-error', component: UnexpectedErrorComponent},
+    { path: 'bad-request', component: BadRequestComponent},
     
     { path: '**', component: ResourceNotFoundComponent },
 ];

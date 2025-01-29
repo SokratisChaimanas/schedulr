@@ -37,7 +37,6 @@ export class EventsComponent implements OnInit {
       },
       error: error => {
         console.error("Error fetching events:", error);
-        alert("Failed to load events. Please try again later.");
       }
     });
   }

@@ -50,6 +50,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/events/**").hasAnyAuthority(Role.SIMPLE_USER.name(), Role.ADMIN.name())
                         .requestMatchers("/api/admin/**").hasAnyAuthority(Role.ADMIN.name())
                         .requestMatchers("/api/comments/**").hasAnyAuthority(Role.SIMPLE_USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/images/**").hasAnyAuthority(Role.SIMPLE_USER.name(), Role.ADMIN.name())
                         .requestMatchers("/**").permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
