@@ -19,16 +19,16 @@
 }
 
 .event-controls button.active {
-    background-color: #0056b3;
+    background-color: #022042;
 }
 
 .event-controls button:hover,
 .event-controls button:active {
-    background-color: #0056b3;
+    background-color: #022042;
 }
 
 .event-controls button:disabled {
-    background-color: #6c757d;
+    background-color: #022042;
     cursor: not-allowed;
 }
 
@@ -52,8 +52,8 @@
 #events li {
     padding: 1rem;
     margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    /*border: 1px solid #ddd;*/
+    /*border-radius: 8px;*/
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -67,10 +67,16 @@
     color: #6c757d;
 }
 
+/* No Events Styles */
+.no-events {
+    text-align: center;
+    color: #6c757d;
+    margin-top: 2rem;
+    padding: 2rem 1rem;
+}
 
 .no-events-image {
     width: 300px;
-    margin-left: 17%;
     height: auto;
     margin-bottom: 1rem;
 }

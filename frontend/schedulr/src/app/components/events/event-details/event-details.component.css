@@ -25,7 +25,8 @@
 .event-image {
     width: 50%; /* Smaller size */
     /*height: 1%;*/
-    object-fit: cover;
+
+    object-fit: fill;
     border-right: 2px solid #e1bee7; /* Light purple border for balance */
 }
 
@@ -45,6 +46,7 @@
     font-size: 1rem;
     color: #e1bee7; /* Softer light purple for description */
     margin-bottom: 1.5rem;
+    overflow: hidden;
 }
 
 .info p {
@@ -257,5 +259,15 @@
 .status-message.canceled {
     color: #ffffff;
     background-color: #ff6161; /* Red for canceled status */
+}
+
+.completed-box {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 

@@ -56,7 +56,7 @@ export class RegisterComponent {
       validators: [Validators.required, Validators.maxLength(50)],
       updateOn: 'blur'
     }),
-    role: new FormControl('SIMPLE_USER', {nonNullable: true}) // Default role is SIMPLE_USER
+    role: new FormControl('SIMPLE_USER', {nonNullable: true})
   }, {
     validators: this.passwordsMatchValidator,
     updateOn: 'change'

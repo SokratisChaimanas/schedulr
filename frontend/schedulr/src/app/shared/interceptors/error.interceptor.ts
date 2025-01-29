@@ -8,7 +8,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
     req: HttpRequest<unknown>,
     next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-    console.log('Went to error interceptor');
     const router = inject(Router);
     
     return next(req).pipe(
@@ -31,7 +30,9 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
                 
                 if (error.error.code) {
                     // Ensure detail exists and is a string before checking `includes`
-                    if ((error.error.code === 'InvalidCredentials') || error.error.code.includes('AlreadyExists')) {
+                    if (error.error.code === 'InvalidCredentials' ||
+                        error.error.code === 'ImageInvalidArgument' ||
+                        error.error.code.includes('AlreadyExists')) {
                         return throwError(() => error.error);
                     }
                 }

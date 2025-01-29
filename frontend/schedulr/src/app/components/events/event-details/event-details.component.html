@@ -1,6 +1,6 @@
 @if (event) {
     <div class="event-details-container">
-        <div class="event-container">
+        <div class="event-container" [class.completed]="event.status === 'COMPLETED'">
             <img
                 class="event-image"
                 [src]="'http://localhost:8080/images/' + this.event!.imageAttachmentReadOnlyDTO.savedName"
@@ -20,7 +20,9 @@
                         Seats: <span class="booked">{{ event.bookedSeats }}</span>/<span class="max">{{ event.maxSeats }}</span>
                     </p>
 
-                    @if (event.status === 'CANCELED') {
+                    @if (event.status === 'COMPLETED') {
+                        <div class="completed-box">COMPLETED</div>
+                    } @else if (event.status === 'CANCELED') {
                         <p class="status-message canceled">This event has been canceled.</p>
                     } @else {
                         @if (event.bookedSeats === event.maxSeats) {
@@ -35,20 +37,20 @@
                     }
 
                     @if (isUserOwner() || this.authService.loggedInUserRole() === 'ADMIN') {
-                        <button
-                            class="cancel-btn"
-                            [disabled]="event.status === 'CANCELED'"
-                            (click)="cancelEvent()"
-                        >
-                            Cancel Event
-                        </button>
+                        @if (event.status === 'PENDING') {
+                            <button
+                                class="cancel-btn"
+                                (click)="cancelEvent()"
+                            >
+                                Cancel Event
+                            </button>
+                        }
                     }
                 </div>
             </div>
         </div>
 
-
-        @if (event.status !== 'CANCELED') {
+        @if (event.status === 'PENDING') {
             <div class="add-comment-section">
                 <textarea
                     class="comment-textarea"
@@ -65,7 +67,6 @@
             </div>
         }
 
-        <!-- Comments Section -->
         @if (event.commentsList && event.commentsList.length > 0) {
             <div class="comments-section">
                 <h2>Comments</h2>

@@ -1,21 +1,20 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from "../../../shared/services/auth.service";
 import { EventService } from "../../../shared/services/event.service";
 import {EventCreate} from "../../../shared/interfaces/Event";
+import {ErrorComponent} from "../../messages/error/error.component";
 
 @Component({
   selector: 'app-create-event',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ErrorComponent],
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
 })
 export class CreateEventComponent {
   router = inject(Router);
-  http = inject(HttpClient);
   destroyRef = inject(DestroyRef);
   authService = inject(AuthService);
   eventService = inject(EventService);
@@ -36,12 +35,50 @@ export class CreateEventComponent {
     }),
     location: new FormControl('', [Validators.required]),
     price: new FormControl(null, [Validators.required, Validators.min(0)]),
-    maxSeats: new FormControl(null, [Validators.required, Validators.min(1)]),
-    category: new FormControl('', [Validators.required]),
+    maxSeats: new FormControl(null, [
+      Validators.required,
+      Validators.min(1),
+      this.wholeNumberValidator
+    ]),
+    category: new FormControl('CONCERT', [Validators.required]),
     imageFile: new FormControl<File | null>(null),
   });
   
+  errorMessages = {
+    title: {
+      required: 'Event title is required',
+      maxLength: 'Event title must be less than 100 characters'
+    },
+    description: {
+      required: 'Description is required',
+      maxLength: 'Description must be less than 500 characters'
+    },
+    date: {
+      required: 'A date and time must be selected',
+      dateError: 'The event date and time must be in the future'
+    },
+    location: {
+      required: 'Location is required'
+    },
+    price: {
+      required: 'Price is required',
+      min: 'Price must be a positive number'
+    },
+    maxSeats: {
+      required: 'Max seats is required',
+      min: 'Max seats must be at least 1',
+      wholeNumber: 'Max seats must be a whole number'
+    },
+    category: {
+      required: 'Category is required'
+    },
+    imageFile: {
+      invalidImage: 'Please provide a valid image file'
+    }
+  };
+  
   onSubmit() {
+    console.log(this.form.get('date'))
     this.trimValues();
     this.form.markAllAsTouched();
     if (this.form.invalid) {
@@ -63,12 +100,16 @@ export class CreateEventComponent {
     
     const subscription = this.eventService.createEvent(createEvent, uuid, imageFile).subscribe({
       next: (response) => {
-        console.log('Event created successfully:', response);
-        this.router.navigate(['/events']);
+        this.router.navigate(['events'], {queryParams: {'event-created': true}});
       },
       error: (error) => {
-        console.error('Error creating event:', error);
-      },
+        if (error.code === 'ImageInvalidArgument') {
+          
+            this.form.get('imageFile')?.setErrors({invalidImage: true});
+            this.form.updateValueAndValidity();
+            return;
+        }
+        },
     });
     
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
@@ -90,7 +131,7 @@ export class CreateEventComponent {
     });
   }
   
-  dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  private dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const value = control.value;
     
     if (!value) {
@@ -98,12 +139,17 @@ export class CreateEventComponent {
     }
     
     const inputDate = new Date(value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
     
-    if (inputDate < today) {
+    if (inputDate <= now) {
       return { dateError: true };
     }
+    
     return null;
   }
+  
+  private wholeNumberValidator(control: AbstractControl) {
+    return Number.isInteger(control.value) ? null : { wholeNumber: true };
+  }
+  
 }

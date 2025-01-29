@@ -6,9 +6,9 @@
             <label for="title">Event Title</label>
             @if (form.get('title')?.touched) {
                 @if (form.get('title')?.hasError('required')) {
-                    <p class="error">Event title is required and must be less than 100 characters.</p>
+                    <app-error [errorMessage]="errorMessages.title.required"/>
                 } @else if (form.get('title')?.hasError('maxlength')) {
-                    <p class="error">Event title must be less than 100 characters.</p>
+                    <app-error [errorMessage]="errorMessages.title.maxLength"/>
                 }
             }
             <input type="text" id="title" placeholder="Enter event title" formControlName="title" />
@@ -18,9 +18,9 @@
             <label for="description">Description</label>
             @if (form.get('description')?.touched) {
                 @if (form.get('description')?.hasError('required')) {
-                    <p class="error">Description is required and must be less than 500 characters.</p>
+                    <app-error [errorMessage]="errorMessages.description.required"/>
                 } @else if (form.get('description')?.hasError('maxlength')) {
-                    <p class="error">Description must be less than 500 characters.</p>
+                    <app-error [errorMessage]="errorMessages.description.maxLength"/>
                 }
             }
             <textarea id="description" placeholder="Enter description" formControlName="description"></textarea>
@@ -28,18 +28,20 @@
 
         <div>
             <label for="date">Date & Time</label>
-            @if (form.get('date')?.touched && form.get('date')?.invalid) {
-                <p class="error">Date and time are required.</p>
+            @if (form.get('date')?.touched) {
+                @if (form.get('date')?.hasError('required')) {
+                    <app-error [errorMessage]="errorMessages.date.required"/>
+                } @else if (form.get('date')?.hasError('dateError')) {
+                    <app-error [errorMessage]="errorMessages.date.dateError"/>
+                }
             }
             <input type="datetime-local" id="date" formControlName="date" />
         </div>
 
         <div>
             <label for="location">Location</label>
-            @if (form.get('location')?.touched) {
-                @if (form.get('location')?.hasError('required')) {
-                    <p class="error">Location is required.</p>
-                }
+            @if (form.get('location')?.touched && form.get('location')?.hasError('required')) {
+                <app-error [errorMessage]="errorMessages.location.required"/>
             }
             <input type="text" id="location" placeholder="Enter event location" formControlName="location" />
         </div>
@@ -48,7 +50,9 @@
             <label for="price">Price</label>
             @if (form.get('price')?.touched) {
                 @if (form.get('price')?.hasError('required')) {
-                    <p class="error">Price is required and must be a positive number.</p>
+                    <app-error [errorMessage]="errorMessages.price.required"/>
+                } @else if (form.get('price')?.hasError('min')) {
+                    <app-error [errorMessage]="errorMessages.price.min"/>
                 }
             }
             <input type="number" id="price" placeholder="Enter price" formControlName="price" />
@@ -58,7 +62,11 @@
             <label for="maxSeats">Max Seats</label>
             @if (form.get('maxSeats')?.touched) {
                 @if (form.get('maxSeats')?.hasError('required')) {
-                    <p class="error">Max seats is required and must be a positive number.</p>
+                    <app-error [errorMessage]="errorMessages.maxSeats.required"/>
+                } @else if (form.get('maxSeats')?.hasError('min')) {
+                    <app-error [errorMessage]="errorMessages.maxSeats.min"/>
+                } @else if (form.get('maxSeats')?.hasError('wholeNumber')) {
+                    <app-error [errorMessage]="errorMessages.maxSeats.wholeNumber"/>
                 }
             }
             <input type="number" id="maxSeats" placeholder="Enter max seats" formControlName="maxSeats" />
@@ -66,10 +74,8 @@
 
         <div>
             <label for="category">Category</label>
-            @if (form.get('category')?.touched) {
-                @if (form.get('category')?.hasError('required')) {
-                    <p class="error">Category is required.</p>
-                }
+            @if (form.get('category')?.touched && form.get('category')?.hasError('required')) {
+                <app-error [errorMessage]="errorMessages.category.required"/>
             }
             <select id="category" formControlName="category">
                 @for (category of categories; track category) {
@@ -80,6 +86,9 @@
 
         <div>
             <label for="imageFile">Image (optional)</label>
+            @if (form.get('imageFile')?.hasError('invalidImage')) {
+                <app-error [errorMessage]="errorMessages.imageFile.invalidImage"/>
+            }
             <input type="file" id="imageFile" (change)="onFileChange($event)" />
         </div>
 

@@ -69,7 +69,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EventFullException.class)
     public ResponseEntity<FailureResponseDTO> handleEventFullException(EventFullException e) {
         FailureResponseDTO failureResponseDTO = FailureResponseDTO.builder()
-                .status(HttpStatus.CONFLICT) // 409 indicates a conflict (e.g., event is full)
+                .status(HttpStatus.CONFLICT)
                 .code(e.getCODE())
                 .message(e.getMessage())
                 .build();
@@ -79,7 +79,17 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AppObjectUnavailableException.class)
     public ResponseEntity<FailureResponseDTO> handleAppObjectUnavailableException(AppObjectUnavailableException e) {
         FailureResponseDTO failureResponseDTO = FailureResponseDTO.builder()
-                .status(HttpStatus.BAD_REQUEST) // 400 indicates an invalid state (e.g., event unavailable)
+                .status(HttpStatus.BAD_REQUEST)
+                .code(e.getCODE())
+                .message(e.getMessage())
+                .build();
+        return new ResponseEntity<>(failureResponseDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AppObjectInvalidArgumentException.class)
+    public ResponseEntity<FailureResponseDTO> handleAppObjectInvalidArgumentException(AppObjectInvalidArgumentException e) {
+        FailureResponseDTO failureResponseDTO = FailureResponseDTO.builder()
+                .status(HttpStatus.BAD_REQUEST)
                 .code(e.getCODE())
                 .message(e.getMessage())
                 .build();

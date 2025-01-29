@@ -69,6 +69,8 @@ public class EventService {
         } catch (AccessDeniedException e) {
             LOGGER.error("Unauthenticated user tried to create event on: {}", LocalDateTime.now());
             throw e;
+        } catch (AppObjectInvalidArgumentException e) {
+            throw e;
         } catch (IOException e) {
             LOGGER.warn("Image File was not saved. Transaction Failed. ERROR: {}", e.getMessage());
             throw e;

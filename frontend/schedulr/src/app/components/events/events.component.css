@@ -9,7 +9,7 @@
 .event-controls button {
     font: inherit;
     cursor: pointer;
-    background-color: #28a745;
+    background-color: #007bff;
     color: #fff;
     border-radius: 4px;
     border: none;
@@ -20,7 +20,7 @@
 
 .event-controls button:hover,
 .event-controls button:active {
-    background-color: #218838;
+    background-color: #022042;
 }
 
 .event-controls button:disabled {
@@ -61,4 +61,8 @@
 #events li p {
     margin: 0.5rem 0;
     color: #6c757d;
+}
+
+.success-message {
+    margin-bottom: 4%;
 }

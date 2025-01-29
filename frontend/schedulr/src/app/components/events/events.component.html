@@ -1,4 +1,9 @@
 <div>
+
+    @if (wasEventCreated()) {
+        <div class="success-message"><app-success message="Event was successfully ceated!"/> </div>
+    }
+
     <section class="event-controls">
         <button (click)="prevPage()" [disabled]="currentPage() === 0">Previous</button>
         <button (click)="nextPage()" [disabled]="currentPage() === totalPages() - 1">Next</button>

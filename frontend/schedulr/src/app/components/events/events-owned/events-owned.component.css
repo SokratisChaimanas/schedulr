@@ -19,12 +19,12 @@
 }
 
 .event-controls button.active {
-    background-color: #0056b3;
+    background-color: #022042;
 }
 
 .event-controls button:hover,
 .event-controls button:active {
-    background-color: #0056b3;
+    background-color: #022042;
 }
 
 .event-controls button:disabled {

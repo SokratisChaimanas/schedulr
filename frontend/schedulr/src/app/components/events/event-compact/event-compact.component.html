@@ -1,4 +1,4 @@
-<div class="event-container" (click)="onClick()">
+<div class="event-container" [class.completed]="event.status === 'COMPLETED'" (click)="onClick()">
     <img
         class="event-image"
         [src]="'http://localhost:8080/images/' + this.event.imageAttachmentReadOnlyDTO.savedName"
@@ -21,6 +21,9 @@
             </p>
             @if (isEventFull()) {
                 <p class="full-notice">This event is full.</p>
+            }
+            @if (event.status === 'COMPLETED') {
+                <div class="completed-box">COMPLETED</div>
             }
         </div>
     </div>

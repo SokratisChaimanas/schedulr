@@ -51,11 +51,9 @@ export class LoginComponent implements OnInit {
     
     this.authService.loginUser(credentials).subscribe({
       next: (response) => {
-        console.log('Login successful:', response);
         this.router.navigate(['/events'])
       },
       error: (error) => {
-        console.error('Login failed:', error);
         if (error.status === 401 || error.code === 'InvalidCredentials') {
           this.router.navigate(['login'], { queryParams: { 'invalid-credentials': true } });
         }

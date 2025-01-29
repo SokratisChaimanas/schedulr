@@ -88,3 +88,30 @@ time {
     color: #e6c7ff; /* Subtle purple for the owner */
     margin-bottom: 1rem;
 }
+
+.event-container.completed {
+    opacity: 0.8;
+}
+
+.completed-box {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.event-container.completed {
+    opacity: 0.8;
+}
+
+.completed-box {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}

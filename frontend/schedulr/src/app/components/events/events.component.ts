@@ -3,28 +3,37 @@ import {EventService} from "../../shared/services/event.service";
 import {EventReadOnly} from "../../shared/interfaces/Event";
 import {EventCompactComponent} from "./event-compact/event-compact.component";
 import {AuthService} from "../../shared/services/auth.service";
+import {ActivatedRoute} from "@angular/router";
+import {SuccessComponent} from "../messages/success/success.component";
 
 @Component({
   selector: 'app-events',
   standalone: true,
   templateUrl: './events.component.html',
   imports: [
-    EventCompactComponent
+    EventCompactComponent,
+    SuccessComponent
   ],
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
   eventService = inject(EventService);
   authService = inject(AuthService)
+  route = inject(ActivatedRoute)
   
   events = signal<EventReadOnly[]>([]);
   totalPages = signal<number>(0);
   currentPage = signal<number>(0);
   pageSize = signal<number>(10);
-  
+  wasEventCreated = signal<boolean>(false);
   
   ngOnInit() {
-    this.loadEvents(this.currentPage());
+    this.route.queryParamMap.subscribe(params => {
+      if (params.get('event-created')) {
+        this.wasEventCreated.set(true)
+      }
+    })
+      this.loadEvents(this.currentPage());
   }
   
   loadEvents(page: number) {

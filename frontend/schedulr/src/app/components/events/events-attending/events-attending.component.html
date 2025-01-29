@@ -26,9 +26,9 @@
             </div>
         } @else {
             @for (event of events(); track event.uuid) {
-                <li>
+                <ul>
                     <app-event-compact [event]="event"></app-event-compact>
-                </li>
+                </ul>
             }
         }
     </section>
