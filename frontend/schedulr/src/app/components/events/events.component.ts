@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit {
   events = signal<EventReadOnly[]>([]);
   totalPages = signal<number>(0);
   currentPage = signal<number>(0);
-  pageSize = signal<number>(10);
+  pageSize = signal<number>(5);
   wasEventCreated = signal<boolean>(false);
   
   ngOnInit() {

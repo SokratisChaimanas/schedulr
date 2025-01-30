@@ -1,6 +1,8 @@
 .event-container {
     display: flex;
-    width: 700px;
+    max-height: 400px;
+    max-width: 1000px;
+    width: 900px;
     background-color: #4c2a85; /* Darker purple for better contrast */
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -22,7 +24,7 @@
 
 .event-image {
     width: 50%;
-    height: 300px;
+    /*height: 50%;*/
     object-fit: fill;
     border-right: 2px solid #bf9ee5;
 }

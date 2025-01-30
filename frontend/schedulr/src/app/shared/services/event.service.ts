@@ -45,7 +45,7 @@ export class EventService {
             .pipe(map((response) => response));
     }
     
-    getPaginatedEvents(page = 0, size = 10, uuid: string) {
+    getPaginatedEvents(page = 0, size = 5, uuid: string) {
         return this.http
             .get<SuccessResponse<Paginated<EventReadOnly>>>(
                 `${this.API_URL_EVENTS}?page=${page}&size=${size}&userUuid=${uuid}`

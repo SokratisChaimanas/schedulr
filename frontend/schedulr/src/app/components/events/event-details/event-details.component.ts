@@ -122,6 +122,11 @@ export class EventDetailsComponent implements OnInit {
       this.commentService.createComment(commentDTO).subscribe({
         next: (newComment) => {
           this.comments.push(newComment); // Update comments section
+          this.event!.commentsList.sort(
+              (a, b) =>
+                  Math.abs(new Date(a.date).getTime() - Date.now()) -
+                  Math.abs(new Date(b.date).getTime() - Date.now())
+          );
           this.newComment = ''; // Clear the text box
         },
         error: (err) => {
@@ -155,5 +160,4 @@ export class EventDetailsComponent implements OnInit {
   onCommentDeleted(commentUuid: string) {
     this.event!.commentsList =  this.event!.commentsList.filter(comment => comment.uuid !== commentUuid);
   }
-  
 }
