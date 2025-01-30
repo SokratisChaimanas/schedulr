@@ -24,9 +24,6 @@ logs/
 
 # Environment and properties
 *.env
-*.properties
-*.yml
-*.yaml
 secrets/
 
 # Node.js / Angular
@@ -45,3 +42,12 @@ yarn-error.log*
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Exclude test directories
+tests/
+__tests__/
+
+# Exclude build artifacts
+/out/
+/build/
+/dist/
