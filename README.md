@@ -7,7 +7,7 @@ Schedulr is an event management application featuring authentication and authori
 ### Cloning the Repository
 To securely obtain the project from GitHub, use the following command:
 ```sh
-git clone --depth=1 <REPO_URL>
+git clone --depth=1 https://github.com/SokratisChaimanas/schedulr.git
 ```
 This ensures that only the latest commit is fetched, minimizing exposure to unnecessary history.
 
@@ -18,31 +18,19 @@ This ensures that only the latest commit is fetched, minimizing exposure to unne
 - MySQL Database
 
 #### Configuration
-Ensure the following properties are correctly set in `application.properties`:
+Ensure the following properties are correctly set in `application.properties` to read from the environment:
 ```properties
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.jpa.properties.hibernate.globally_quoted_identifiers=true
-spring.data.jpa.repositories.enabled=true
-
-spring.servlet.multipart.max-file-size=5MB
-spring.servlet.multipart.max-request-size=10MB
-
-# DB CONNECTION
-spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:schedulrdb}?serverTimezone=UTC
-spring.datasource.username=${MYSQL_USER:schedulruser}
-spring.datasource.password=${MYSQL_PASSWORD:aufhqnWe9.FW48_Xp6oJ}
-spring.jpa.hibernate.ddl-auto=update
-
-spring.sql.init.encoding=UTF-8
-spring.sql.init.platform=mysql
-
-logging.level.org.springframework.security=DEBUG
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}?serverTimezone=UTC
+spring.datasource.username=${MYSQL_USER}
+spring.datasource.password=${MYSQL_PASSWORD}
 ```
 
 #### Build and Run Backend
 ```sh
+cd backend/schedulr
+gradle wrapper
 ./gradlew build
-java -jar build/libs/schedulr.jar
+./gradlew bootRun
 ```
 
 ### Frontend Setup (Angular)
@@ -52,14 +40,16 @@ java -jar build/libs/schedulr.jar
 
 #### Install Dependencies and Build
 ```sh
-cd frontend
+cd frontend/schedulr
 npm install
-ng build --configuration=production
+ng serve
 ```
 
 ## Additional Considerations
 - Ensure MySQL is running and properly configured.
-- Environment variables can be used to override sensitive database credentials.
+- If using environment variables, ensure they are exported or set before running the application.
 - The backend should be deployed before the frontend for seamless integration.
+- Backend runs on [localhost:8080](http://localhost:8080/)
+- Frontend runs on [http://localhost:4200/](http://localhost:4200/)
 
 More details will be added as needed.
