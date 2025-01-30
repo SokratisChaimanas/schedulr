@@ -22,17 +22,14 @@ export class EventsAllComponent {
   
   ngOnInit() {
     this.loadEvents('PENDING'); // Default to pending events
-    console.log("HEREEE")
   }
   
   loadEvents(status: 'PENDING' | 'COMPLETED' | 'CANCELED', page: number = 0) {
     this.currentStatus.set(status);
     this.currentPage.set(page);
-    console.log(status)
     
     this.eventService.getEventsByStatus(this.authService.loggedInUserUuid()!, status).subscribe({
       next: (data) => {
-        console.log(data)
         this.events.set(data); // Set the retrieved events
       },
       error: (err) => console.error(`Failed to fetch ${status} events`, err)

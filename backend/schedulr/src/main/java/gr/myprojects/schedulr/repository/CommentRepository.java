@@ -11,8 +11,4 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaSpecificationExecutor<Comment> {
     Optional<Comment> findByUuid(String uuid);
-    List<Comment> findByEventId(Integer eventId);
-//    List<Comment> findByUserId(Integer userId);
-    List<Comment> findByEventUuid(String eventUuid);
-//    List<Comment> findByUserUuid(String userUuid);
 }

@@ -10,7 +10,6 @@ import {
     EventReadOnly,
 } from '../interfaces/Event';
 import { Paginated } from '../interfaces/Paginated';
-import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root',

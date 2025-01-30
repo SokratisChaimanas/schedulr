@@ -14,7 +14,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
         catchError((error: HttpErrorResponse) => {
             console.log('Error intercepted:', error);
             
-            // Use error.status directly (not error.error.status)
             if (error.status === 403) {
                 router.navigate(['resource-forbidden']);
                 return throwError(() => error.error);
@@ -29,7 +28,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
                 console.log('STATUS:', error.error);
                 
                 if (error.error.code) {
-                    // Ensure detail exists and is a string before checking `includes`
                     if (error.error.code === 'InvalidCredentials' ||
                         error.error.code === 'ImageInvalidArgument' ||
                         error.error.code.includes('AlreadyExists')) {

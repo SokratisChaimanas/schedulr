@@ -28,7 +28,6 @@ public class AuthenticationService {
         User user = userRepository.findByUsername(authentication.getName())
                 .orElseThrow(() ->new UserNotAuthorizedException("User not authorized"));
 
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtService.generateToken(user.getUsername(), user.getRole().name(), user.getUuid());
 

@@ -11,13 +11,4 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
     Optional<User> findByUuid(String uuid);
-
-    // Returns a List of Users that attend an event based on the event's id
-    List<User> findByEventsToAttendId(Integer eventId);
-
-    // Returns a List of Users that attend an event based on the event's uuid
-    List<User> findByEventsToAttendUuid(String eventUuid);
-
-    // Returns the owner of the event with the specific uuid
-    Optional<User> findByOwnedEventsUuid(String eventUuid);
 }

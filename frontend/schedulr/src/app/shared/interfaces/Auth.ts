@@ -14,5 +14,4 @@ export interface JwtPayload {
     uuid?: string; // UUID
     role?: string; // Role
     exp: number
-    // [key: string]: any; // Other optional fields
 }

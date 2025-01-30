@@ -52,17 +52,15 @@ public class EventRestController {
         } catch (IOException e) {
             throw new ValidationException("Invalid JSON format for createDTO", bindingResult);
         }
-        // Validate the input data
+
         if (bindingResult.hasErrors()) {
             throw new ValidationException("ImageAttachment", bindingResult);
         }
         System.out.println(createDTOJson + ": JSOOOON");
         System.out.println(createDTO);
 
-        // Call service to save the event
         EventReadOnlyDTO readOnlyDTO = eventService.saveEvent(createDTO, uuid, imageFile);
 
-        // Prepare the success response DTO
         SuccessResponseDTO<EventReadOnlyDTO> successResponseDTO = SuccessResponseDTO.<EventReadOnlyDTO>builder()
                 .status(HttpStatus.CREATED)
                 .data(readOnlyDTO)
@@ -173,10 +171,8 @@ public class EventRestController {
     public ResponseEntity<SuccessResponseDTO<EventReadOnlyDTO>> getEventByUuid(
             @PathVariable String eventUuid) throws AppObjectNotFoundException, AppServerException {
 
-        // Call service to fetch the event by UUID
         EventReadOnlyDTO eventReadOnlyDTO = eventService.getEventByUuid(eventUuid);
 
-        // Prepare the success response DTO
         SuccessResponseDTO<EventReadOnlyDTO> successResponseDTO = SuccessResponseDTO.<EventReadOnlyDTO>builder()
                 .status(HttpStatus.OK)
                 .data(eventReadOnlyDTO)

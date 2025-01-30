@@ -33,7 +33,6 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    // This implements configuration settings for the authorization
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
@@ -59,12 +58,10 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    // Defines who can access our endpoints
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        // Who allows to hit my APIs, this is the front end origin point at production level
         corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:5273"));
         corsConfiguration.setAllowedMethods(List.of("*"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
@@ -77,8 +74,6 @@ public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
 
-    // Here we say that the auth provider we got it's a dao auth provider
-    // We could have more than this
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
@@ -107,9 +102,4 @@ public class SecurityConfiguration {
         return new CustomAccessDeniedHandler();
     }
 
-
-//    @Bean
-//    public MultipartResolver multipartResolver() {
-//        return new StandardServletMultipartResolver();
-//    }
 }

@@ -158,22 +158,17 @@ public class EventService {
     @Transactional(rollbackFor = Exception.class)
     public Page<EventReadOnlyDTO> getPaginatedPendingEvents(int page, int size, String userUuid) throws AppObjectNotFoundException, AppServerException {
         try {
-            // Ensure user is authenticated and principal is retrieved
             User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(userUuid);
 
-            // Set up pagination parameters
             Pageable pageable = PageRequest.of(page, size);
 
-            // Fetch events based on the given status
             Page<Event> eventsPage = eventRepository.findByStatus(Status.PENDING, pageable);
 
-            // Filter events to exclude those the user is already attending
             List<Event> filteredEvents = eventsPage.getContent().stream()
                     .filter(event -> event.getAttendees().stream()
                             .noneMatch(attendee -> attendee.getUuid().equals(principalUser.getUuid())))
                     .toList();
 
-            // Convert the filtered list back into a pageable format
             Page<EventReadOnlyDTO> resultPage = new PageImpl<>(filteredEvents, pageable, eventsPage.getTotalElements())
                     .map(mapper::mapToEventReadOnlyDTO);
 
@@ -227,10 +222,8 @@ public class EventService {
 
     @Transactional
     public List<EventReadOnlyDTO> getFilteredEvents(EventFilterDTO filterDTO) {
-        // Map the DTO to filters
         EventFilters filters = mapper.mapToEventFilters(filterDTO);
 
-        // Fetch filtered data
         return eventRepository.findAll(getSpecsFromFilters(filters))
                 .stream().map(mapper::mapToEventReadOnlyDTO).toList();
     }
@@ -270,15 +263,12 @@ public class EventService {
     @Transactional(rollbackFor = Exception.class)
     public List<EventReadOnlyDTO> getOwnedEventsByUserUuid(String userUuid) throws AppObjectNotFoundException, AccessDeniedException, AppServerException {
         try {
-            // Check the authentication and get the principal user
             User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(userUuid);
 
-            // Validate if the user exists
             if (userRepository.findByUuid(userUuid).isEmpty()) {
                 throw new AppObjectNotFoundException("User", "User with UUID: " + userUuid + " does not exist");
             }
 
-            // Fetch events owned by the logged-in user
             List<Event> ownedEventsList = eventRepository.findByOwnerUuid(principalUser.getUuid());
             LOGGER.info("Events owned by user with UUID: {}, were fetched. Number of events: {}",
                     principalUser.getUuid(), ownedEventsList.size());
@@ -319,7 +309,6 @@ public class EventService {
                 throw new AppObjectNotFoundException("User", "User with UUID: " + userUuid + " does not exist");
             }
 
-            // Fetch attended events
             List<Event> attendedEvents = eventRepository.findByAttendeesUuid(userUuid)
                     .stream().filter(event -> event.getStatus().equals(status))
                     .toList();
@@ -327,7 +316,6 @@ public class EventService {
             LOGGER.info("Events attended by user with UUID: {}, were fetched. Number of events: {}",
                     userUuid, attendedEvents.size());
 
-            // Map to DTO and return
             return mapper.mapToEventReadOnlyDTO(attendedEvents);
         } catch (AppObjectNotFoundException e) {
             LOGGER.warn("Events for user with UUID: {} were not fetched. {}", userUuid, e.getMessage());

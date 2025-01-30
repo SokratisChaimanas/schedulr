@@ -32,8 +32,8 @@ export class EventDetailsComponent implements OnInit {
   userUuid = this.authService.loggedInUserUuid();
   isAttending: boolean = false;
   
-  newComment: string = ''; // Text for the new comment
-  comments: CommentReadOnly[] = []; // To store comments and dynamically update the section
+  newComment: string = '';
+  comments: CommentReadOnly[] = [];
   
   ngOnInit() {
     this.route.queryParamMap.subscribe((params) => {
@@ -61,11 +61,9 @@ export class EventDetailsComponent implements OnInit {
                     new Date(b.date).getTime() - new Date(a.date).getTime()
             ) || [];
         this.eventOwner = this.event?.ownerReadOnlyDTO
-        // console.log(this.eventOwner?.username)
         this.loading = false;
       },
       error: (err) => {
-        console.log(err);
       },
     });
   }
@@ -78,7 +76,6 @@ export class EventDetailsComponent implements OnInit {
         );
       },
       error: (err) => {
-        console.log('Error fetching attended events:', err);
       },
     });
   }
@@ -96,16 +93,13 @@ export class EventDetailsComponent implements OnInit {
       
       this.eventService.attendEvent(attendDTO).subscribe({
         next: (response) => {
-          console.log('Successfully attended the event:', response);
           this.isAttending = true;
           
-          // Update the event to reflect the new seat count
           if (this.event) {
             this.event.bookedSeats++;
           }
         },
         error: (err) => {
-          console.log('Error attending event:', err);
         },
       });
     }
@@ -145,13 +139,11 @@ export class EventDetailsComponent implements OnInit {
       
       this.eventService.cancelEvent(cancelDTO).subscribe({
         next: (response) => {
-          console.log('Event successfully canceled:', response);
           if (this.event) {
             this.event.status = 'CANCELED'; // Update the status locally
           }
         },
         error: (err) => {
-          console.log('Error canceling event:', err);
         },
       });
     }

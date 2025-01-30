@@ -13,7 +13,6 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<Event, Integer>, JpaSpecificationExecutor<Event> {
     Optional<Event> findByUuid(String uuid);
 
-    List<Event> findByOwnerId(Integer id);
     List<Event> findByOwnerUuid(String uuid);
 
     List<Event> findByAttendeesUuid(String uuid);

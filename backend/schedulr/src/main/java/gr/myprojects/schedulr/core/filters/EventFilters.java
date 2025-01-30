@@ -15,26 +15,26 @@ import java.time.LocalDateTime;
 public class EventFilters extends GenericFilters {
 
     @Nullable
-    private LocalDateTime dateFrom;  // Filter events starting from this date.
+    private LocalDateTime dateFrom;
 
     @Nullable
-    private LocalDateTime dateTo;    // Filter events until this date.
+    private LocalDateTime dateTo;
 
     @Nullable
-    private String location;         // Filter events by location.
+    private String location;
 
     @Nullable
-    private Double minPrice;         // Minimum price filter.
+    private Double minPrice;
 
     @Nullable
-    private Double maxPrice;         // Maximum price filter.
+    private Double maxPrice;
 
     @Nullable
-    private Category category;       // Category filter (e.g., "Workshop", "Conference").
+    private Category category;
 
     @Nullable
-    private String title;            // Partial match for the title of the event.
+    private String title;
 
     @Nullable
-    private Pageable pageable;       // Pagination information for paginated queries.
+    private Pageable pageable;
 }

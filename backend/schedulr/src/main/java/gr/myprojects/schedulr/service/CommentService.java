@@ -64,23 +64,18 @@ public class CommentService {
     @Transactional(rollbackFor = Exception.class)
     public CommentReadOnlyDTO deleteComment(String userUuid, String commentUuid) throws AppObjectNotFoundException, AccessDeniedException, AppServerException {
         try {
-            // Authenticate user and check their existence
             User principalUser = serviceUtil.checkAuthenticationAndReturnPrincipal(userUuid);
 
-            // Find the comment to delete
             Comment commentToDelete = commentRepository.findByUuid(commentUuid)
                     .orElseThrow(() -> new AppObjectNotFoundException("Comment", "Comment with UUID: " + commentUuid + " was not found"));
 
-            // Check if the user is the author or an admin
             if (!commentToDelete.getAuthor().getUuid().equals(principalUser.getUuid()) && !serviceUtil.isUserAdmin(principalUser)) {
                 throw new AccessDeniedException("You do not have permission to delete this comment.");
             }
 
-            // Delete the comment
             commentToDelete.setIsDeleted(true);
             LOGGER.info("Comment with UUID: {} was successfully deleted by User UUID: {}", commentUuid, userUuid);
 
-            // Return the read-only DTO of the deleted comment
             return mapper.mapToCommentReadOnlyDTO(commentToDelete);
         } catch (AppObjectNotFoundException e) {
             LOGGER.warn("Failed to delete comment. {}", e.getMessage());

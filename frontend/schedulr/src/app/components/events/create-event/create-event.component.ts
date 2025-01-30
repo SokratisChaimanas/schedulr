@@ -78,7 +78,6 @@ export class CreateEventComponent {
   };
   
   onSubmit() {
-    console.log(this.form.get('date'))
     this.trimValues();
     this.form.markAllAsTouched();
     if (this.form.invalid) {
