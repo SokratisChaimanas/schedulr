@@ -18,20 +18,6 @@ This ensures that only the latest commit is fetched, minimizing exposure to unne
 - MySQL Database
 
 #### Configuration
-You can configure the database connection manually in `application.properties` by setting:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/schedulrdb?serverTimezone=UTC
-spring.datasource.username=schedulruser
-spring.datasource.password=yourpassword
-```
-Alternatively, use environment variables for better security and flexibility:
-```sh
-export MYSQL_HOST=localhost
-export MYSQL_PORT=3306
-export MYSQL_DB=schedulrdb
-export MYSQL_USER=schedulruser
-export MYSQL_PASSWORD=yourpassword
-```
 Ensure the following properties are correctly set in `application.properties` to read from the environment:
 ```properties
 spring.datasource.url=jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}?serverTimezone=UTC
