@@ -18,6 +18,20 @@ This ensures that only the latest commit is fetched, minimizing exposure to unne
 - MySQL Database
 
 #### Configuration
+You can configure the database connection manually in `application.properties` by setting:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/schedulrdb?serverTimezone=UTC
+spring.datasource.username=schedulruser
+spring.datasource.password=yourpassword
+```
+Alternatively, use environment variables for better security and flexibility:
+```sh
+export MYSQL_HOST=localhost
+export MYSQL_PORT=3306
+export MYSQL_DB=schedulrdb
+export MYSQL_USER=schedulruser
+export MYSQL_PASSWORD=yourpassword
+```
 Ensure the following properties are correctly set in `application.properties` to read from the environment:
 ```properties
 spring.datasource.url=jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}?serverTimezone=UTC
@@ -33,6 +47,22 @@ gradle wrapper
 ./gradlew bootRun
 ```
 
+Once the backend server is up and running, you can access the API documentation via Swagger at:
+[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+### Backend Structure
+The backend follows a structured approach under the `schedulr` package:
+- **authentication** - Handles authentication and authorization logic, including login, registration, and JWT security.
+- **core** - Contains configurations, enums, exception handling, filters, mappers, and utility functions.
+- **dto** - Defines Data Transfer Objects used for communication between layers.
+- **model** - Represents the entity models mapped to the database.
+- **repository** - Houses the interfaces for interacting with the database.
+- **rest** - Contains the controllers for handling API requests and responses.
+- **security** - Manages security configurations and user permissions.
+- **service** - Implements business logic and interaction between layers.
+- **specification** - Provides query specifications for dynamic database queries.
+- **validation** - Contains custom validation logic and constraints.
+
 ### Frontend Setup (Angular)
 #### Prerequisites:
 - Node.js 18+
@@ -45,11 +75,23 @@ npm install
 ng serve
 ```
 
+### Frontend Structure
+The frontend follows a modular structure within the `src/app` directory:
+- **components** - Holds UI components that are reusable across the application.
+- **shared** - Contains:
+  - **guards** - Handles route protection and authentication checks.
+  - **interceptors** - Manages HTTP requests, including authorization tokens.
+  - **interfaces** - Defines TypeScript interfaces for structured data management.
+  - **services** - Provides services for API interaction, authentication, and data handling.
+- **index.html** - The main HTML file that serves as the entry point for the application.
+- **main.ts** - The main TypeScript file responsible for bootstrapping the Angular application.
+- **styles.css** - The global styles file for the frontend.
+
+The `public` folder contains necessary static assets such as images and icons.
+
 ## Additional Considerations
 - Ensure MySQL is running and properly configured.
 - If using environment variables, ensure they are exported or set before running the application.
 - The backend should be deployed before the frontend for seamless integration.
 - Backend runs on [localhost:8080](http://localhost:8080/)
 - Frontend runs on [http://localhost:4200/](http://localhost:4200/)
-
-More details will be added as needed.
